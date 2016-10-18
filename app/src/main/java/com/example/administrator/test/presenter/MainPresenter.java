@@ -63,7 +63,7 @@ public class MainPresenter implements IPresenter {
                 break;
             case 1:
                 showListToast();// 测试一下git分支
-                startTestActivity();
+//                startTestActivity();
                 vMain.setTitleTextColor(R.color.colorAccent);
 //                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;

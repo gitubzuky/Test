@@ -58,18 +58,14 @@ public class MainPresenter implements IPresenter {
             case 0:
 //                ImageView ivItem = (ImageView) view.findViewById(R.id.iv_item);
 //                setImage(ivItem);
-
-
-
                 vMain.setTitleTextColor(R.color.colorPrimary);
                 vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;
             case 1:
 //                showListToast();
-
                 startTestActivity();
                 vMain.setTitleTextColor(R.color.colorAccent);
-                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
+//                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;
             default:
                 break;

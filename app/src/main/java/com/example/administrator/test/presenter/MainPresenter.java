@@ -65,7 +65,7 @@ public class MainPresenter implements IPresenter {
 //                showListToast();
                 startTestActivity();
                 vMain.setTitleTextColor(R.color.colorAccent);
-                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
+//                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;
             default:
                 break;

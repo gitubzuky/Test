@@ -1,8 +1,8 @@
+
 package com.example.administrator.test.presenter;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.administrator.test.R;
 import com.example.administrator.test.TestActivity;
-import com.example.administrator.test.adapter.MainAdapter;
 import com.example.administrator.test.model.TestBean;
 import com.example.administrator.test.view.IView;
 
@@ -24,13 +23,14 @@ import rx.Subscriber;
 import rx.functions.Action1;
 
 /**
- * 主界面presenter
- * Created by Administrator on 2016/9/13.
+ * 主界面presenter Created by Administrator on 2016/9/13.
  */
 public class MainPresenter implements IPresenter {
     private List<TestBean> dataList;
     private IView vMain;
-    private String[] info = {"测试1", "测试2", "测试3"};
+    private String[] info = {
+            "测试1", "测试2", "测试3"
+    };
 
     public MainPresenter(IView vMain) {
         this.vMain = vMain;
@@ -56,14 +56,15 @@ public class MainPresenter implements IPresenter {
     public void doItemClick(final View view, int position, long l, int viewType) {
         switch (viewType) {
             case 0:
-//                ImageView ivItem = (ImageView) view.findViewById(R.id.iv_item);
-//                setImage(ivItem);
+                // ImageView ivItem = (ImageView)
+                // view.findViewById(R.id.iv_item);
+                // setImage(ivItem);
                 vMain.setTitleTextColor(R.color.colorPrimary);
                 vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;
             case 1:
-//                showListToast();// 测试一下git分支
-//                startTestActivity();
+                // showListToast();// 测试一下git分支
+                startTestActivity();
                 vMain.setTitleTextColor(R.color.colorAccent);
                 vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
                 break;
@@ -92,7 +93,8 @@ public class MainPresenter implements IPresenter {
         Observable.create(new Observable.OnSubscribe<Drawable>() {
             @Override
             public void call(Subscriber<? super Drawable> subscriber) {
-                Drawable drawable = ((Activity) vMain).getResources().getDrawable(R.drawable.ic_launcher);
+                Drawable drawable = ((Activity) vMain).getResources()
+                        .getDrawable(R.drawable.ic_launcher);
                 subscriber.onNext(drawable);
                 subscriber.onCompleted();
             }

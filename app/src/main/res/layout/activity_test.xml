@@ -15,14 +15,15 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Hello World!"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_test"
-        android:layout_below="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        />
+    <Button
+        android:id="@+id/act_test_btn_rxjava_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="测试"
+        android:layout_below="@+id/tv_test_title"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

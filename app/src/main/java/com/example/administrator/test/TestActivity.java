@@ -45,7 +45,8 @@ public class TestActivity extends AppCompatActivity implements IView {
         btnRxjavaTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testPresenter.doTask();
+                // testPresenter.doTask();
+                testPresenter.doRxjavaflatMapTask();
             }
         });
     }

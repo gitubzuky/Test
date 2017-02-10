@@ -6,11 +6,13 @@ import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
+import com.example.administrator.test.presenter.ILoginPresenter;
 import com.example.administrator.test.presenter.TestPresenter;
 import com.example.administrator.test.view.IView;
 
@@ -23,8 +25,10 @@ public class TestActivity extends AppCompatActivity implements IView {
     TextView tvTitle;
     @ViewInject(R.id.act_test_btn_rxjava_test)
     Button btnRxjavaTest;
+    @ViewInject(R.id.act_test_et_username)
+    EditText et_username;
 
-    TestPresenter testPresenter;
+    ILoginPresenter testPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,8 @@ public class TestActivity extends AppCompatActivity implements IView {
             @Override
             public void onClick(View v) {
                 // testPresenter.doTask();
-                testPresenter.doRxjavaflatMapTask();
+                // testPresenter.doRxjavaflatMapTask();
+                testPresenter.login(et_username.getText().toString());
             }
         });
     }
@@ -84,4 +89,10 @@ public class TestActivity extends AppCompatActivity implements IView {
                 break;
         }
     }
+
+    @Override
+    public void changeText(String text) {
+        btnRxjavaTest.setText(text);
+    }
+
 }

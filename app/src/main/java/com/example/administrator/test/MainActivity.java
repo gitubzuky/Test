@@ -1,3 +1,4 @@
+
 package com.example.administrator.test;
 
 import android.os.Bundle;
@@ -15,7 +16,8 @@ import com.example.administrator.test.presenter.IPresenter;
 import com.example.administrator.test.presenter.MainPresenter;
 import com.example.administrator.test.view.IView;
 
-public class MainActivity extends AppCompatActivity implements IView, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity
+        implements IView, AdapterView.OnItemClickListener {
     private TextView tvTitle;
     private ListView lvMain;
     private IPresenter presenter;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements IView, AdapterVie
 
     @Override
     public void showToast(String toast, int duration) {
-        switch (duration){
+        switch (duration) {
             case Toast.LENGTH_SHORT:
                 Toast.makeText(MainActivity.this, toast, Toast.LENGTH_SHORT).show();
                 break;
@@ -65,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements IView, AdapterVie
             default:
                 break;
         }
+    }
+
+    @Override
+    public void changeText(String text) {
+
     }
 
     @Override

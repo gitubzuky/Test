@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.administrator.test.ConstraintTestActivity;
 import com.example.administrator.test.R;
 import com.example.administrator.test.TestActivity;
 import com.example.administrator.test.model.TestBean;
@@ -61,6 +62,7 @@ public class MainPresenter implements IPresenter {
                 // setImage(ivItem);
                 vMain.setTitleTextColor(R.color.colorPrimary);
                 vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
+                startConstraintActicity();
                 break;
             case 1:
                 // showListToast();// 测试一下git分支
@@ -76,6 +78,11 @@ public class MainPresenter implements IPresenter {
 
     private void startTestActivity() {
         Intent i = new Intent((Activity) vMain, TestActivity.class);
+        ((Activity) vMain).startActivity(i);
+    }
+
+    private void startConstraintActicity() {
+        Intent i = new Intent((Activity) vMain, ConstraintTestActivity.class);
         ((Activity) vMain).startActivity(i);
     }
 

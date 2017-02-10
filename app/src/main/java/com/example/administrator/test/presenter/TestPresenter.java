@@ -1,7 +1,6 @@
 
 package com.example.administrator.test.presenter;
 
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.administrator.test.model.TestBean;
@@ -18,23 +17,15 @@ import rx.functions.Func1;
  * Created by Administrator on 2017/2/4.
  */
 
-public class TestPresenter implements IPresenter {
+public class TestPresenter implements ILoginPresenter {
     private IView ivTest;
 
     private Subscriber<String> subscriber;
 
+    private TestBean bean;
+
     public TestPresenter(IView ivTest) {
         this.ivTest = ivTest;
-
-    }
-
-    @Override
-    public List<TestBean> getData() {
-        return null;
-    }
-
-    @Override
-    public void doItemClick(View view, int position, long l, int viewType) {
 
     }
 
@@ -62,6 +53,16 @@ public class TestPresenter implements IPresenter {
         Observable observable = Observable.just("onNext", "onNext2");
 
         observable.subscribe(subscriber);
+    }
+
+    @Override
+    public void login(String userName) {
+        if ("1".equals(userName)) {
+            ivTest.showToast("登录成功", Toast.LENGTH_SHORT);
+            ivTest.changeText("已登录");
+        } else {
+            ivTest.showToast("登录失败", Toast.LENGTH_SHORT);
+        }
     }
 
     /**

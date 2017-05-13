@@ -2,26 +2,19 @@
 package com.example.administrator.test.presenter;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.administrator.test.ConstraintTestActivity;
 import com.example.administrator.test.R;
 import com.example.administrator.test.TestActivity;
+import com.example.administrator.test.VideoActivity;
 import com.example.administrator.test.model.TestBean;
 import com.example.administrator.test.view.IView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.functions.Action1;
 
 /**
  * 主界面presenter Created by Administrator on 2016/9/13.
@@ -66,9 +59,11 @@ public class MainPresenter implements IPresenter {
                 break;
             case 1:
                 // showListToast();// 测试一下git分支
-                startTestActivity();
-                vMain.setTitleTextColor(R.color.colorAccent);
-                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
+                // startTestActivity();
+                // vMain.setTitleTextColor(R.color.colorAccent);
+                // vMain.showToast(dataList.get(position).getText(),
+                // Toast.LENGTH_SHORT);
+                startActivity(VideoActivity.class);
                 break;
             default:
                 break;
@@ -81,45 +76,13 @@ public class MainPresenter implements IPresenter {
         ((Activity) vMain).startActivity(i);
     }
 
-    private void startConstraintActicity() {
-        Intent i = new Intent((Activity) vMain, ConstraintTestActivity.class);
+    private void startActivity(Class clzz) {
+        Intent i = new Intent((Activity) vMain, clzz);
         ((Activity) vMain).startActivity(i);
     }
 
-    private void showListToast() {
-        Observable.from(info)
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        vMain.showToast(s, Toast.LENGTH_SHORT);
-                    }
-                });
-    }
-
-    private void setImage(final ImageView ivItem) {
-        Observable.create(new Observable.OnSubscribe<Drawable>() {
-            @Override
-            public void call(Subscriber<? super Drawable> subscriber) {
-                Drawable drawable = ((Activity) vMain).getResources()
-                        .getDrawable(R.drawable.ic_launcher);
-                subscriber.onNext(drawable);
-                subscriber.onCompleted();
-            }
-        }).subscribe(new Observer<Drawable>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(((Application) vMain), "图片获取错误", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNext(Drawable drawable) {
-                ivItem.setImageDrawable(drawable);
-            }
-        });
+    private void startConstraintActicity() {
+        Intent i = new Intent((Activity) vMain, ConstraintTestActivity.class);
+        ((Activity) vMain).startActivity(i);
     }
 }

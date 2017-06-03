@@ -181,7 +181,7 @@ public class MyCustomSwitch extends View {
     }
 
     private void initPaint() {
-        paintBg = new Paint();
+        paintBg = new Paint();// 背景
         // 设置画笔基本属性
         paintBg.setAntiAlias(true);// 抗锯齿功能
         paintBg.setColor(Color.RED); // 设置画笔颜色
@@ -190,7 +190,7 @@ public class MyCustomSwitch extends View {
         paintBg.setStrokeWidth(5);// 设置画笔宽度
         // paintBg.setShadowLayer(10, 15, 15, Color.GREEN);// 设置阴影
 
-        paintSlider = new Paint();
+        paintSlider = new Paint();// 滑块
         // 设置画笔基本属性
         paintSlider.setAntiAlias(true);// 抗锯齿功能
         paintSlider.setColor(Color.WHITE); // 设置画笔颜色
@@ -224,6 +224,7 @@ public class MyCustomSwitch extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
     }
 
     @Override

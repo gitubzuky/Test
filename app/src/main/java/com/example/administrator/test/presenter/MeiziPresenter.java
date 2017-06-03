@@ -5,15 +5,20 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.administrator.test.model.MeiziTestBean;
 import com.example.administrator.test.model.MeiziTestBean.ResultsBean;
 import com.example.administrator.test.view.IMeiziView;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.lib.mylib.http.BaseBeanHttpCallBack;
+import com.lib.mylib.http.BaseHttpCallBack;
 import com.lib.mylib.http.BaseRequest;
 import com.lib.mylib.http.HttpCallBack;
+import com.lib.mylib.http.HttpRequestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,18 +40,31 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     /**
      * 测试使用自己封装的Retrofit来请求网络数据
-     * 
+     *
      * @param type
      * @param limit
      * @param page
      */
     @Override
     public void loadMeiziImgsTest(String type, String limit, String page) {
+        request4DataUseBase_Model(type, limit, page);
+        // request4BaseBeanUseBase_Model(type, limit, page);
+        // request4BaseBeanUseModel(type, limit, page);
+    }
+
+    /**
+     * Base请求Base处理
+     * 
+     * @param type
+     * @param limit
+     * @param page
+     */
+    private void request4DataUseBase(String type, String limit, String page) {
         // 自己封装的Retrofit请求
         BaseRequest.getInstance()
                 .baseUrl("http://gank.io/api/data/")
                 .path(type + "/" + limit + "/" + page)
-                .callBack(new HttpCallBack() {
+                .callBack(new BaseHttpCallBack() {
                     @Override
                     public void onResult(String baseJson, int which) {
                         Log.d(TAG, "http请求成功，数据：" + baseJson);
@@ -61,8 +79,138 @@ public class MeiziPresenter implements IMeiziPresenter {
     }
 
     /**
-     * 处理数据
+     * Base请求model解析
      * 
+     * @param type
+     * @param limit
+     * @param page
+     */
+    private void request4DataUseBase_Model(String type, String limit, String page) {
+        HttpRequestUtil util = new HttpRequestUtil<>();
+        util.baseUrl("http://gank.io/api/data/")
+                .path(type + "/" + limit + "/" + page)
+                .callBack(new HttpCallBack<ResultsBean>() {
+                    @Override
+                    public void onResult(List<ResultsBean> dataList, int which) {
+                        meiziList = dataList;
+                        if (meiziList != null && meiziList.size() > 0
+                                && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                            ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                            ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                        } else {
+                            ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                        }
+                    }
+
+                    @Override
+                    public boolean filter(List<ResultsBean> dataList) {
+                        dataList.remove(5);
+                        dataList.remove(1);
+                        if (dataList.size() < 9) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+
+                    @Override
+                    public void onError(int which) {
+
+                    }
+                })
+                .modelGet("results", new TypeToken<List<ResultsBean>>() {
+                }.getType());
+    }
+
+    /**
+     * Base请求model解析 - 返回基础Bean
+     *
+     * @param type
+     * @param limit
+     * @param page
+     */
+    private void request4BaseBeanUseBase_Model(String type, String limit, String page) {
+        meiziList = new ArrayList<>();
+        HttpRequestUtil util = new HttpRequestUtil<>();
+        util.baseUrl("http://gank.io/api/data/")
+                .path(type + "/" + limit + "/" + page)
+                .callBack(new BaseBeanHttpCallBack<MeiziTestBean>() {
+                    @Override
+                    public void onResult(MeiziTestBean bean, int which) {
+                        if (!bean.isError()) {
+                            meiziList.clear();
+                            meiziList.addAll(bean.getResults());
+                            if (meiziList != null && meiziList.size() > 0
+                                    && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                                ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                                ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                            } else {
+                                ivConstraintTest.showToast("图片加载出错",
+                                        Toast.LENGTH_SHORT);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public boolean filter(MeiziTestBean baseBean) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onError(int which) {
+
+                    }
+                })
+                .modelGet(new TypeToken<MeiziTestBean>() {
+                }.getType());
+    }
+
+    /**
+     * Mode请求和处理
+     * 
+     * @param type
+     * @param limit
+     * @param page
+     */
+    private void request4BaseBeanUseModel(String type, String limit, String page) {
+        HttpRequestUtil<List<ResultsBean>> util = new HttpRequestUtil<>();
+        util.baseUrl("http://gank.io/api/data/")
+                .path(type + "/" + limit + "/" + page)
+                .callBack(new HttpCallBack<ResultsBean>() {
+                    @Override
+                    public void onResult(List<ResultsBean> dataList, int which) {
+                        meiziList = dataList;
+                        if (meiziList != null && meiziList.size() > 0
+                                && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                            ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                            ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                        } else {
+                            ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                        }
+                    }
+
+                    @Override
+                    public boolean filter(List<ResultsBean> dataList) {
+                        dataList.remove(5);
+                        dataList.remove(1);
+                        if (dataList.size() < 9) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+
+                    @Override
+                    public void onError(int which) {
+
+                    }
+                })
+                .modelGet("results");
+    }
+
+    /**
+     * 处理数据
+     *
      * @param baseJson
      */
     private void dealData(String baseJson) {

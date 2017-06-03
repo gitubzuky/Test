@@ -50,15 +50,15 @@ public class MeiziResult {
         // Response<MeiziTestBean> response) {
         // Log.i("Retrofit", "onResponse: " + response.body());
         // meiziBeanList = response.body().getResults();
-        // if (mHttpCallback != null) {
-        // mHttpCallback.onResult(response.body().getResults());
+        // if (mBaseHttpCallback != null) {
+        // mBaseHttpCallback.onResult(response.body().getResults());
         // }
         // }
         //
         // @Override
         // public void onFailure(Call<MeiziTestBean> call, Throwable t) {
-        // if (mHttpCallback != null) {
-        // mHttpCallback.onError();
+        // if (mBaseHttpCallback != null) {
+        // mBaseHttpCallback.onError();
         // }
         // }
         // });

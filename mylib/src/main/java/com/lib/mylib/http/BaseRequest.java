@@ -21,14 +21,14 @@ import retrofit2.http.Url;
  * .baseUrl(String baseUrl) <br/>
  * .path(String path)<br/>
  * .params(String key, String value)(可选)<br/>
- * .callBack(new HttpCallBack())<br/>
+ * .callBack(new BaseHttpCallBack())<br/>
  * .get();<br/>
  * 或<br/>
  * BaseRequest.getInstance() <br/>
  * .baseUrl(String baseUrl) <br/>
  * .path(String path)<br/>
  * .params(String key, String value)(可选)<br/>
- * .callBack(new HttpCallBack())<br/>
+ * .callBack(new BaseHttpCallBack())<br/>
  * .post();<br/>
  * TODO:未完成的优化或者问题有:<br/>
  * 1.多个请求并行的处理 <br/>
@@ -36,15 +36,15 @@ import retrofit2.http.Url;
  */
 public class BaseRequest {
     private static final String TAG = "mylib";
-    private int which = 0;
-    private boolean isRequesting[] = {
+    public int which = 0;
+    public boolean[] isRequesting = {
             false, false, false, false, false, false, false, false, false, false
     };
 
-    private String baseUrl = "";
-    private String path = "";
+    public String baseUrl = "";
+    public String path = "";
     private static Map<String, Object> params;
-    private HttpCallBack mHttpCallback;
+    private BaseHttpCallBack mBaseHttpCallback;
     private static BaseRequest mBaseRequest = new BaseRequest();
 
     public BaseRequest() {
@@ -111,9 +111,9 @@ public class BaseRequest {
         // public void onResponse(Call<String> call, Response<String> response)
         // {
         // params.clear();
-        // if (mHttpCallback != null) {
+        // if (mBaseHttpCallback != null) {
         // Log.d(TAG, "http:get请求成功");
-        // mHttpCallback.onResult(response.body(), which);
+        // mBaseHttpCallback.onResult(response.body(), which);
         // }
         // }
         //
@@ -121,8 +121,8 @@ public class BaseRequest {
         // public void onFailure(Call<String> call, Throwable t) {
         // params.clear();
         // Log.d(TAG, "http:get请求失败\n错误信息：" + t.toString());
-        // if (mHttpCallback != null) {
-        // mHttpCallback.onError(which);
+        // if (mBaseHttpCallback != null) {
+        // mBaseHttpCallback.onError(which);
         // }
         // }
         // });
@@ -138,17 +138,17 @@ public class BaseRequest {
 
                     @Override
                     public void onNext(String s) {
-                        if (mHttpCallback != null) {
+                        if (mBaseHttpCallback != null) {
                             Log.d(TAG, "http:get请求成功");
-                            mHttpCallback.onResult(s, which);
+                            mBaseHttpCallback.onResult(s, which);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "http:get请求失败\n错误信息：" + e.toString());
-                        if (mHttpCallback != null) {
-                            mHttpCallback.onError(which);
+                        if (mBaseHttpCallback != null) {
+                            mBaseHttpCallback.onError(which);
                         }
                     }
 
@@ -158,6 +158,7 @@ public class BaseRequest {
                         isRequesting[which] = false;
                     }
                 });
+
         return mBaseRequest;
 
     }
@@ -180,16 +181,16 @@ public class BaseRequest {
         // public void onResponse(Call<String> call, Response<String> response)
         // {
         // params.clear();
-        // if (mHttpCallback != null) {
-        // mHttpCallback.onResult(response.body(), which);
+        // if (mBaseHttpCallback != null) {
+        // mBaseHttpCallback.onResult(response.body(), which);
         // }
         // }
         //
         // @Override
         // public void onFailure(Call<String> call, Throwable t) {
         // params.clear();
-        // if (mHttpCallback != null) {
-        // mHttpCallback.onError(which);
+        // if (mBaseHttpCallback != null) {
+        // mBaseHttpCallback.onError(which);
         // }
         // }
         // });
@@ -205,17 +206,17 @@ public class BaseRequest {
 
                     @Override
                     public void onNext(String s) {
-                        if (mHttpCallback != null) {
+                        if (mBaseHttpCallback != null) {
                             Log.d(TAG, "http:get请求成功");
-                            mHttpCallback.onResult(s, which);
+                            mBaseHttpCallback.onResult(s, which);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "http:get请求失败\n错误信息：" + e.toString());
-                        if (mHttpCallback != null) {
-                            mHttpCallback.onError(which);
+                        if (mBaseHttpCallback != null) {
+                            mBaseHttpCallback.onError(which);
                         }
                     }
 
@@ -227,8 +228,8 @@ public class BaseRequest {
         return mBaseRequest;
     }
 
-    public BaseRequest callBack(HttpCallBack mHttpCallback) {
-        this.mHttpCallback = mHttpCallback;
+    public BaseRequest callBack(BaseHttpCallBack mHttpCallback) {
+        this.mBaseHttpCallback = mHttpCallback;
         return mBaseRequest;
     }
 }

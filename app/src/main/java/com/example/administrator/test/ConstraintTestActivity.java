@@ -37,7 +37,7 @@ public class ConstraintTestActivity extends AppCompatActivity
 
     MeiziPresenter presenter;
 
-    private final String type_fuli = "福利";
+    private final String TYPE_FULI = "福利";
 
     private int limit, page;
 
@@ -115,10 +115,9 @@ public class ConstraintTestActivity extends AppCompatActivity
     }
 
     private void initView() {
-        // presenter.loadMeiziImgs(type_fuli, String.valueOf(limit),
+        // presenter.loadMeiziImgs(TYPE_FULI, String.valueOf(limit),
         // String.valueOf(page));
-        presenter.loadMeiziImgsTest(type_fuli, String.valueOf(limit),
-                String.valueOf(page));
+        presenter.loadMeiziImgsTest(TYPE_FULI, limit, page);
         btnNext.setOnClickListener(this);
         tvLeft.setOnClickListener(this);
         tvRight.setOnClickListener(this);
@@ -131,9 +130,10 @@ public class ConstraintTestActivity extends AppCompatActivity
                 presenter.nextMeizi();
                 break;
             case R.id.act_constraint_test_tv_left:
-
+                presenter.loadPreviousGroupOfMeizi();
                 break;
             case R.id.act_constraint_test_tv_right:
+                presenter.loadNextGroupOfMeizi();
                 break;
         }
     }

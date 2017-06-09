@@ -7,9 +7,13 @@ package com.example.administrator.test.presenter;
 
 public interface IMeiziPresenter {
 
-    void loadMeiziImgsTest(String type, String limit, String page);
+    void loadMeiziImgsTest(String type, int limit, int page);
 
     void nextMeizi();
 
     void loadDate();
+
+    void loadNextGroupOfMeizi();
+
+    void loadPreviousGroupOfMeizi();
 }

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lib.mylib.bean.BaseBean;
 
 import java.lang.reflect.Type;
@@ -37,6 +38,7 @@ public class HttpRequestUtil<T> {
     private static final String TAG = "HttpRequestUtil";
     private HttpCallBack<T> mHttpCallBack;
     private BaseBeanHttpCallBack<T> mBaseBeanHttpCallBack;
+    private BaseHttpCallBack mBaseHttpCallBack;
 
     public boolean[] isRequesting = {
             false, false, false, false, false, false, false, false, false, false
@@ -203,7 +205,7 @@ public class HttpRequestUtil<T> {
                     public void onError(Throwable e) {
                         Log.d(TAG, "http:get请求失败\n错误信息：" + e.toString());
                         if (mHttpCallBack != null) {
-                            mHttpCallBack.onError(which);
+                            mHttpCallBack.onError(HttpCallBack.ERROR_CODE_500, which);
                         }
                     }
 
@@ -222,7 +224,7 @@ public class HttpRequestUtil<T> {
      * @param dataKey
      * @return
      */
-    public HttpRequestUtil modelGet(final String dataKey) {
+    public HttpRequestUtil get(final String dataKey, final Type type) {
         if (isRequesting[which]) {
             return this;
         }
@@ -231,14 +233,21 @@ public class HttpRequestUtil<T> {
         Log.d(TAG, "http:请求baseUrl:" + baseUrl);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(ModelConverterFactory.create(dataKey))
+                .addConverterFactory(BaseConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        HttpRequestService<BaseBean> request = retrofit.create(HttpRequestService.class);
+        HttpRequestService<String> request = retrofit.create(HttpRequestService.class);
 
-        Observable<BaseBean> observable = request.get4GetModelBean(path);
+        Observable<String> observable = request.get4GetBaseBean(path);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<String, BaseBean>() {
+                    @Override
+                    public BaseBean apply(@NonNull String baseJson) throws Exception {
+                        return parseJsonToBaseBean(baseJson, dataKey, new TypeToken<BaseBean>() {
+                        }.getType());
+                    }
+                })
                 .subscribe(new Observer<BaseBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -247,19 +256,40 @@ public class HttpRequestUtil<T> {
 
                     @Override
                     public void onNext(@NonNull BaseBean baseBean) {
+                        if (mBaseHttpCallBack != null) {
+                            if (!baseBean.isError()) {
+                                mBaseHttpCallBack.onResult(baseBean.getResults(), which);
+                            } else {
+                                mBaseHttpCallBack.onError(which);
+                            }
+                            return;
+                        }
 
-                        if (mBaseBeanHttpCallBack != null) {
+                        if (mHttpCallBack != null) {
                             Log.d(TAG, "http:get请求成功");
                             // mBaseBeanHttpCallBack.onResult(baseBean,
                             // which);
+                            if (!baseBean.isError()) {
+                                mHttpCallBack.onResult(
+                                        (List<T>) parseDataJsonToList(baseBean.getResults(), type),
+                                        which);
+                            } else {
+                                mHttpCallBack.onError(HttpCallBack.ERROR_CODE_400, which);
+                            }
+                            return;
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, "http:get请求失败\n错误信息：" + e.toString());
-                        if (mBaseBeanHttpCallBack != null) {
-                            mBaseBeanHttpCallBack.onError(which);
+                        if (mHttpCallBack != null) {
+                            mHttpCallBack.onError(HttpCallBack.ERROR_CODE_500, which);
+                            return;
+                        }
+
+                        if (mBaseHttpCallBack != null) {
+                            mBaseHttpCallBack.onError(which);
                         }
                     }
 
@@ -272,7 +302,7 @@ public class HttpRequestUtil<T> {
     }
 
     /**
-     * 测试-自定义的解析工厂(不返回数据，返回基础bean)
+     * 测试-自定义的解析工厂(不返回数据，返回自定义的基础bean)
      *
      * @return
      */
@@ -296,7 +326,7 @@ public class HttpRequestUtil<T> {
                 .map(new Function<String, T>() {
                     @Override
                     public T apply(@NonNull String baseJson) throws Exception {
-                        return parseJsonToBean(baseJson, type);
+                        return parseJsonToCustomBaseBean(baseJson, type);
                     }
                 })
                 .filter(new Predicate<T>() {
@@ -339,6 +369,15 @@ public class HttpRequestUtil<T> {
         return this;
     }
 
+    /**
+     * 根据dataKey来解析获得源json中的dataList
+     * 
+     * @param json
+     * @param dataKey
+     * @param type
+     * @param <T>
+     * @return
+     */
     private <T> List<T> parseJsonToList(String json, String dataKey, Type type) {
         List<T> tempList = new ArrayList<>();
         if (!TextUtils.isEmpty(json)) {
@@ -353,11 +392,63 @@ public class HttpRequestUtil<T> {
         return tempList;
     }
 
-    private <T> T parseJsonToBean(String baseJson, Type type) {
+    /**
+     * 解析DataJson转化为list
+     * 
+     * @param dataJson
+     * @param type
+     * @return
+     */
+    private List<?> parseDataJsonToList(String dataJson, Type type) {
+        List<?> tempList = new ArrayList<>();
+        if (!TextUtils.isEmpty(dataJson)) {
+            Log.d("http", "onResult:dealData" + dataJson);
+            Gson gson = new Gson();
+            tempList = gson.fromJson(dataJson, type);
+        }
+        return tempList;
+    }
+
+    /**
+     * 直接解析源json, 返回自定义BaseBean类型的bean
+     * 
+     * @param baseJson
+     * @param type
+     * @param <T>
+     * @return
+     */
+    private <T> T parseJsonToCustomBaseBean(String baseJson, Type type) {
         Gson gson = new Gson();
         T baseBean = null;
         try {
             baseBean = gson.fromJson(baseJson, type);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        }
+        return baseBean;
+    }
+
+    /**
+     * 直接解析源json, 返回Lib包BaseBean类型的bean
+     *
+     * @param baseJson
+     * @param dataKey
+     * @param type
+     * @return
+     */
+    private BaseBean parseJsonToBaseBean(String baseJson, String dataKey, Type type) {
+        Gson gson = new Gson();
+        BaseBean baseBean = new BaseBean();
+        try {
+            JsonParser parser = new JsonParser();
+            JsonElement el = parser.parse(baseJson);
+
+            boolean isError = el.getAsJsonObject().get("error").getAsBoolean();
+            baseBean.setError(isError);
+
+            String dataJson = el.getAsJsonObject().get(dataKey).toString();
+            Log.d("http", "onResult:dealData" + dataJson);
+            baseBean.setResults(dataJson);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

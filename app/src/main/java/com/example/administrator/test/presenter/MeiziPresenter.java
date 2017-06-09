@@ -34,6 +34,10 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     private int position = 0;
 
+    private int page = 1;
+    private int limit = 10;
+    private String dataType = "福利";
+
     public MeiziPresenter(IMeiziView ivConstraintTest) {
         this.ivConstraintTest = ivConstraintTest;
     }
@@ -46,10 +50,44 @@ public class MeiziPresenter implements IMeiziPresenter {
      * @param page
      */
     @Override
-    public void loadMeiziImgsTest(String type, String limit, String page) {
-        request4DataUseBase_Model(type, limit, page);
-        // request4BaseBeanUseBase_Model(type, limit, page);
-        // request4BaseBeanUseModel(type, limit, page);
+    public void loadMeiziImgsTest(String type, int limit, int page) {
+        this.dataType = type;
+        this.limit = limit;
+        this.page = page;
+        // request4DataUseBase_Model(dataType, limit, page);
+
+        // request4BaseBeanUseBase_Model(dataType, limit, page);
+        // request4BaseBeanUseModel(dataType, limit, page);
+        request4DataByLibBaseBean(type, limit, page, new HttpCallBack<ResultsBean>() {
+            @Override
+            public void onResult(List<ResultsBean> dataList, int which) {
+                meiziList = dataList;
+                if (meiziList != null && meiziList.size() > 0
+                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                } else {
+                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public boolean filter(List<ResultsBean> dataList) {
+                dataList.remove(5);
+                dataList.remove(1);
+                if (dataList.size() < 9) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public void onError(int errorCode, int which) {
+
+            }
+
+        });
     }
 
     /**
@@ -59,7 +97,7 @@ public class MeiziPresenter implements IMeiziPresenter {
      * @param limit
      * @param page
      */
-    private void request4DataUseBase(String type, String limit, String page) {
+    private void request4DataUseBase(String type, int limit, int page) {
         // 自己封装的Retrofit请求
         BaseRequest.getInstance()
                 .baseUrl("http://gank.io/api/data/")
@@ -85,7 +123,7 @@ public class MeiziPresenter implements IMeiziPresenter {
      * @param limit
      * @param page
      */
-    private void request4DataUseBase_Model(String type, String limit, String page) {
+    private void request4DataUseBase_Model(String type, int limit, int page) {
         HttpRequestUtil util = new HttpRequestUtil<>();
         util.baseUrl("http://gank.io/api/data/")
                 .path(type + "/" + limit + "/" + page)
@@ -104,17 +142,18 @@ public class MeiziPresenter implements IMeiziPresenter {
 
                     @Override
                     public boolean filter(List<ResultsBean> dataList) {
-                        dataList.remove(5);
-                        dataList.remove(1);
-                        if (dataList.size() < 9) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        // dataList.remove(5);
+                        // dataList.remove(1);
+                        // if (dataList.size() < 9) {
+                        // return true;
+                        // } else {
+                        // return false;
+                        //
+                        return false;
                     }
 
                     @Override
-                    public void onError(int which) {
+                    public void onError(int errorCode, int which) {
 
                     }
                 })
@@ -129,7 +168,7 @@ public class MeiziPresenter implements IMeiziPresenter {
      * @param limit
      * @param page
      */
-    private void request4BaseBeanUseBase_Model(String type, String limit, String page) {
+    private void request4BaseBeanUseBase_Model(String type, int limit, int page) {
         meiziList = new ArrayList<>();
         HttpRequestUtil util = new HttpRequestUtil<>();
         util.baseUrl("http://gank.io/api/data/")
@@ -172,7 +211,7 @@ public class MeiziPresenter implements IMeiziPresenter {
      * @param limit
      * @param page
      */
-    private void request4BaseBeanUseModel(String type, String limit, String page) {
+    private void request4BaseBeanUseModel(String type, int limit, int page) {
         HttpRequestUtil<List<ResultsBean>> util = new HttpRequestUtil<>();
         util.baseUrl("http://gank.io/api/data/")
                 .path(type + "/" + limit + "/" + page)
@@ -201,11 +240,30 @@ public class MeiziPresenter implements IMeiziPresenter {
                     }
 
                     @Override
-                    public void onError(int which) {
+                    public void onError(int errorCode, int which) {
 
                     }
+
                 })
-                .modelGet("results");
+                .modelGet(new TypeToken<MeiziTestBean>() {
+                }.getType());
+    }
+
+    /**
+     * 使用lib中的BaseBean获取数据
+     *
+     * @param type
+     * @param limit
+     * @param page
+     */
+    private void request4DataByLibBaseBean(String type, int limit, int page,
+            HttpCallBack<ResultsBean> callBack) {
+        HttpRequestUtil<List<ResultsBean>> util = new HttpRequestUtil<>();
+        util.baseUrl("http://gank.io/api/data/")
+                .path(type + "/" + limit + "/" + page)
+                .callBack(callBack)
+                .get("results", new TypeToken<List<ResultsBean>>() {
+                }.getType());
     }
 
     /**
@@ -256,5 +314,68 @@ public class MeiziPresenter implements IMeiziPresenter {
         } else {
             position = -1;
         }
+    }
+
+    @Override
+    public void loadNextGroupOfMeizi() {
+        page++;
+        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
+            @Override
+            public void onResult(List<ResultsBean> dataList, int which) {
+                meiziList = dataList;
+                if (meiziList != null && meiziList.size() > 0
+                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                } else {
+                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public boolean filter(List<ResultsBean> dataBean) {
+                return false;
+            }
+
+            @Override
+            public void onError(int errorCode, int which) {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadPreviousGroupOfMeizi() {
+        page--;
+        if (page < 1) {
+            page++;
+            ivConstraintTest.showToast("已经是最新的一批Meizi了╮(╯▽╰)╭", Toast.LENGTH_SHORT);
+            return;
+        }
+        position = -1;
+        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
+            @Override
+            public void onResult(List<ResultsBean> dataList, int which) {
+                meiziList.clear();
+                meiziList.addAll(dataList);
+                if (meiziList != null && meiziList.size() > 0
+                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                } else {
+                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public boolean filter(List<ResultsBean> dataBean) {
+                return false;
+            }
+
+            @Override
+            public void onError(int errorCode, int which) {
+
+            }
+        });
     }
 }

@@ -1,6 +1,12 @@
 
 package com.example.administrator.test.presenter;
 
+import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_URLS;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -8,6 +14,7 @@ import android.widget.Toast;
 import com.example.administrator.test.model.MeiziTestBean;
 import com.example.administrator.test.model.MeiziTestBean.ResultsBean;
 import com.example.administrator.test.view.IMeiziView;
+import com.example.administrator.test.widget.picturecheck.BigPictureActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -17,6 +24,7 @@ import com.lib.mylib.http.BaseHttpCallBack;
 import com.lib.mylib.http.BaseRequest;
 import com.lib.mylib.http.HttpCallBack;
 import com.lib.mylib.http.HttpRequestUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +62,7 @@ public class MeiziPresenter implements IMeiziPresenter {
         this.dataType = type;
         this.limit = limit;
         this.page = page;
+        position = 0;
         // request4DataUseBase_Model(dataType, limit, page);
 
         // request4BaseBeanUseBase_Model(dataType, limit, page);
@@ -90,9 +99,167 @@ public class MeiziPresenter implements IMeiziPresenter {
         });
     }
 
+    @Override
+    public void nextMeizi() {
+        position++;
+        if (meiziList != null && position < meiziList.size()
+                && !TextUtils.isEmpty(meiziList.get(position).getUrl())) {
+            ivConstraintTest.setImage(meiziList.get(position).getUrl());
+            ivConstraintTest.setDate(meiziList.get(position).getPublishedAt());
+        } else {
+            ivConstraintTest.showToast("本批Meizi浏览完毕，再次点击重新播放", Toast.LENGTH_SHORT);
+            position = -1;
+        }
+    }
+
+    @Override
+    public void loadMeiziByPosition(int position) {
+        this.position = position;
+        ivConstraintTest.setImage(meiziList.get(position).getUrl());
+    }
+
+    @Override
+    public void loadDate() {
+        if (meiziList != null && position < meiziList.size()
+                && !TextUtils.isEmpty(meiziList.get(position).getPublishedAt())) {
+            ivConstraintTest.setDate(meiziList.get(position).getPublishedAt());
+        } else {
+            position = -1;
+        }
+    }
+
+    @Override
+    public void loadNextGroupOfMeizi() {
+        page++;
+        position = 0;
+        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
+            @Override
+            public void onResult(List<ResultsBean> dataList, int which) {
+                meiziList = dataList;
+                if (meiziList != null && meiziList.size() > 0
+                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                } else {
+                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public boolean filter(List<ResultsBean> dataBean) {
+                return false;
+            }
+
+            @Override
+            public void onError(int errorCode, int which) {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadPreviousGroupOfMeizi() {
+        page--;
+        if (page < 1) {
+            page++;
+            ivConstraintTest.showToast("已经是最新的一批Meizi了╮(╯▽╰)╭", Toast.LENGTH_SHORT);
+            return;
+        }
+        position = -1;
+        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
+            @Override
+            public void onResult(List<ResultsBean> dataList, int which) {
+                meiziList.clear();
+                meiziList.addAll(dataList);
+                if (meiziList != null && meiziList.size() > 0
+                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
+                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
+                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
+                } else {
+                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public boolean filter(List<ResultsBean> dataBean) {
+                return false;
+            }
+
+            @Override
+            public void onError(int errorCode, int which) {
+
+            }
+        });
+    }
+
+    @Override
+    public void showBigPic(Activity activity, int locationX, int locationY, int width, int height,
+            DisplayImageOptions options) {
+        Intent it = new Intent();
+        it.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        it.setClass(activity, BigPictureActivity.class);
+        it.putExtra("position", position);
+        ArrayList<String> imgList = getImgList(meiziList);
+        it.putExtra("locationX", locationX);
+        it.putExtra("locationY", locationY);
+        // int[] imgSize =
+        // getImageWidthHeight(meiziList.get(position).getUrl());
+        // double proportion = imgSize[0] / imgSize[1];
+        // int[] actualSize = getActualWidthHeight(width, height, proportion);
+        // it.putExtra("width", actualSize[0]);
+        // it.putExtra("height", actualSize[1]);
+        it.putExtra("width", width);
+        it.putExtra("height", height);
+        it.putExtra(EXTRA_IMAGE_URLS, imgList);
+        activity.startActivityForResult(it, 1);
+    }
+
+    /**
+     * 根据图片宽高比计算出实际宽高
+     * 
+     * @param proportion
+     * @return
+     */
+    private int[] getActualWidthHeight(int width, int height, double proportion) {
+        int[] actualWidthHeight = new int[2];
+        if (proportion > 1) {
+            actualWidthHeight[0] = width;
+            actualWidthHeight[1] = (int) (width / proportion);
+        } else {
+            actualWidthHeight[0] = (int) (height * proportion);
+            actualWidthHeight[1] = height;
+        }
+        return actualWidthHeight;
+    }
+
+    public int[] getImageWidthHeight(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        /**
+         * 最关键在此，把options.inJustDecodeBounds = true;
+         * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
+         */
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options); // 此时返回的bitmap为null
+        /**
+         * options.outHeight为原始图片的高
+         */
+        return new int[] {
+                options.outWidth, options.outHeight
+        };
+    }
+
+    private ArrayList<String> getImgList(List<ResultsBean> meiziList) {
+        ArrayList<String> imgUrls = new ArrayList<>();
+        for (int i = 0; i < meiziList.size(); i++) {
+            imgUrls.add(meiziList.get(i).getUrl());
+        }
+        return imgUrls;
+    }
+
     /**
      * Base请求Base处理
-     * 
+     *
      * @param type
      * @param limit
      * @param page
@@ -118,7 +285,7 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     /**
      * Base请求model解析
-     * 
+     *
      * @param type
      * @param limit
      * @param page
@@ -206,7 +373,7 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     /**
      * Mode请求和处理
-     * 
+     *
      * @param type
      * @param limit
      * @param page
@@ -291,91 +458,5 @@ public class MeiziPresenter implements IMeiziPresenter {
                 ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
             }
         }
-    }
-
-    @Override
-    public void nextMeizi() {
-        position++;
-        if (meiziList != null && position < meiziList.size()
-                && !TextUtils.isEmpty(meiziList.get(position).getUrl())) {
-            ivConstraintTest.setImage(meiziList.get(position).getUrl());
-            ivConstraintTest.setDate(meiziList.get(position).getPublishedAt());
-        } else {
-            ivConstraintTest.showToast("本批Meizi浏览完毕，再次点击重新播放", Toast.LENGTH_SHORT);
-            position = -1;
-        }
-    }
-
-    @Override
-    public void loadDate() {
-        if (meiziList != null && position < meiziList.size()
-                && !TextUtils.isEmpty(meiziList.get(position).getPublishedAt())) {
-            ivConstraintTest.setDate(meiziList.get(position).getPublishedAt());
-        } else {
-            position = -1;
-        }
-    }
-
-    @Override
-    public void loadNextGroupOfMeizi() {
-        page++;
-        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
-            @Override
-            public void onResult(List<ResultsBean> dataList, int which) {
-                meiziList = dataList;
-                if (meiziList != null && meiziList.size() > 0
-                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
-                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
-                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
-                } else {
-                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
-                }
-            }
-
-            @Override
-            public boolean filter(List<ResultsBean> dataBean) {
-                return false;
-            }
-
-            @Override
-            public void onError(int errorCode, int which) {
-
-            }
-        });
-    }
-
-    @Override
-    public void loadPreviousGroupOfMeizi() {
-        page--;
-        if (page < 1) {
-            page++;
-            ivConstraintTest.showToast("已经是最新的一批Meizi了╮(╯▽╰)╭", Toast.LENGTH_SHORT);
-            return;
-        }
-        position = -1;
-        request4DataByLibBaseBean(dataType, limit, page, new HttpCallBack<ResultsBean>() {
-            @Override
-            public void onResult(List<ResultsBean> dataList, int which) {
-                meiziList.clear();
-                meiziList.addAll(dataList);
-                if (meiziList != null && meiziList.size() > 0
-                        && !TextUtils.isEmpty(meiziList.get(0).getUrl())) {
-                    ivConstraintTest.setImage(meiziList.get(0).getUrl());
-                    ivConstraintTest.setDate(meiziList.get(0).getPublishedAt());
-                } else {
-                    ivConstraintTest.showToast("图片加载出错", Toast.LENGTH_SHORT);
-                }
-            }
-
-            @Override
-            public boolean filter(List<ResultsBean> dataBean) {
-                return false;
-            }
-
-            @Override
-            public void onError(int errorCode, int which) {
-
-            }
-        });
     }
 }

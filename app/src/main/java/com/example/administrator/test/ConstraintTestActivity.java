@@ -1,6 +1,8 @@
 
 package com.example.administrator.test;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -19,6 +21,7 @@ import com.example.administrator.test.view.IMeiziView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class ConstraintTestActivity extends AppCompatActivity
         implements IMeiziView, View.OnClickListener {
@@ -40,6 +43,7 @@ public class ConstraintTestActivity extends AppCompatActivity
     private final String TYPE_FULI = "福利";
 
     private int limit, page;
+    private String TAG = "ConstraintTestActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class ConstraintTestActivity extends AppCompatActivity
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.EXACTLY)
                 .build();
 
         limit = 10;
@@ -121,6 +126,7 @@ public class ConstraintTestActivity extends AppCompatActivity
         btnNext.setOnClickListener(this);
         tvLeft.setOnClickListener(this);
         tvRight.setOnClickListener(this);
+        ivMeizi.setOnClickListener(this);
     }
 
     @Override
@@ -135,6 +141,43 @@ public class ConstraintTestActivity extends AppCompatActivity
             case R.id.act_constraint_test_tv_right:
                 presenter.loadNextGroupOfMeizi();
                 break;
+            case R.id.act_constraint_test_iv_meizi:
+                final int[] location = new int[2];
+                ivMeizi.getLocationInWindow(location); // 获取在当前窗口内的绝对坐标，含toolBar
+                ivMeizi.getLocationOnScreen(location); // 获取在整个屏幕内的绝对坐标，含statusBar
+                presenter.showBigPic(this, location[0],
+                        location[1],
+                        ivMeizi.getWidth(), ivMeizi.getHeight(), options);
+        }
+    }
+
+    /**
+     * 获得状态栏的高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getStatusHeight(Context context) {
+
+        int statusHeight = -1;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height")
+                    .get(object).toString());
+            statusHeight = context.getResources().getDimensionPixelSize(height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusHeight;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1) {
+            int currentImgPosition = data.getIntExtra("currentPosition", 0);
+            presenter.loadMeiziByPosition(currentImgPosition);
         }
     }
 }

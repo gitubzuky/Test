@@ -23,9 +23,16 @@
         <activity
             android:name=".TestActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ConstraintTestActivity" />
+        <activity
+            android:name=".ConstraintTestActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".VideoActivity" />
         <activity android:name=".MessageCenterActivity" />
+        <activity
+            android:name=".widget.picturecheck.BigPictureActivity"
+            android:theme="@style/Transparent"></activity>
+        <activity android:name=".temp.bigpicture.BigActivity"></activity>
+        <activity android:name=".temp.bigpicture.ImagePagerActivity" />
     </application>
 
 </manifest>

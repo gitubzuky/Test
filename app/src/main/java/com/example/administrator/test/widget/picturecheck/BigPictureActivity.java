@@ -29,6 +29,7 @@ public class BigPictureActivity extends AppCompatActivity {
     private TextView indicator;
     private int position;
     Intent it;
+    private final String TAG = "ImageBigCheck";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,33 +50,55 @@ public class BigPictureActivity extends AppCompatActivity {
         BigPictureActivity.ImagePagerAdapter mAdapter = new BigPictureActivity.ImagePagerAdapter(
                 getSupportFragmentManager(), urls);
         mPager.setAdapter(mAdapter);
-        mPager.setOffscreenPageLimit(5);
+        mPager.setOffscreenPageLimit(0);
         indicator = (TextView) findViewById(R.id.indicator);
 
         CharSequence text = getString(R.string.viewpager_indicator, 1,
                 mPager.getAdapter().getCount());
         indicator.setText(text);
-        // 更新下标
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrollStateChanged(int arg0) {
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+
             }
 
             @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageSelected(int arg0) {
-                CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1,
+            public void onPageSelected(int position) {
+                CharSequence text = getString(R.string.viewpager_indicator, position + 1,
                         mPager.getAdapter().getCount());
                 indicator.setText(text);
-                pagerPosition = arg0;
-
+                pagerPosition = position;
             }
 
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
+
+        // // 更新下标
+        // mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        //
+        // @Override
+        // public void onPageScrollStateChanged(int arg0) {
+        // }
+        //
+        // @Override
+        // public void onPageScrolled(int arg0, float arg1, int arg2) {
+        // }
+        //
+        // @Override
+        // public void onPageSelected(int arg0) {
+        // CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1,
+        // mPager.getAdapter().getCount());
+        // indicator.setText(text);
+        // pagerPosition = arg0;
+        //
+        // }
+        //
+        // });
         if (savedInstanceState != null) {
             pagerPosition = savedInstanceState.getInt(STATE_POSITION);
         }
@@ -113,5 +136,10 @@ public class BigPictureActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // super.onActivityResult(requestCode, resultCode, data);
         Log.d("onActivityResult", data.getIntExtra("currentPosition", 0) + "");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

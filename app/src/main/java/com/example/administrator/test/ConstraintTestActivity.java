@@ -147,7 +147,7 @@ public class ConstraintTestActivity extends AppCompatActivity
                 ivMeizi.getLocationOnScreen(location); // 获取在整个屏幕内的绝对坐标，含statusBar
                 presenter.showBigPic(this, location[0],
                         location[1],
-                        ivMeizi.getWidth(), ivMeizi.getHeight(), options);
+                        ivMeizi.getWidth(), ivMeizi.getHeight());
         }
     }
 

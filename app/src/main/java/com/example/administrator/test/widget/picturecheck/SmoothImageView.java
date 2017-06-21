@@ -8,7 +8,6 @@ package com.example.administrator.test.widget.picturecheck;
 import android.animation.Animator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -273,7 +272,7 @@ public class SmoothImageView extends android.support.v7.widget.AppCompatImageVie
             if (mTransformStart) {
                 if (mState == STATE_TRANSFORM_IN) {
                     mTransfrom.initStartIn();
-                } else {
+                } else if (mState == STATE_TRANSFORM_OUT) {
                     mTransfrom.initStartOut();
                 }
             }
@@ -358,13 +357,17 @@ public class SmoothImageView extends android.support.v7.widget.AppCompatImageVie
                 mTransfrom.rect.height = (Float) animation.getAnimatedValue("height");
                 mBgAlpha = (Integer) animation.getAnimatedValue("alpha");
                 invalidate();
-                ((Activity) getContext()).getWindow().getDecorView().invalidate();
+                // TODO:暂时不知道为啥下面这句会报错
+                // ((Activity) getContext()).getWindow().getDecorView()
+                // .invalidate();
             }
         });
         valueAnimator.addListener(new ValueAnimator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
+                if (mTransformListener != null) {
+                    mTransformListener.onTransformStart(state);
+                }
             }
 
             @Override
@@ -383,7 +386,6 @@ public class SmoothImageView extends android.support.v7.widget.AppCompatImageVie
                 if (state == STATE_TRANSFORM_IN) {
                     mState = STATE_NORMAL;
                 }
-
                 if (mTransformListener != null) {
                     mTransformListener.onTransformComplete(state);
                 }
@@ -404,6 +406,11 @@ public class SmoothImageView extends android.support.v7.widget.AppCompatImageVie
     private TransformListener mTransformListener;
 
     public static interface TransformListener {
+        /**
+         * 动画
+         */
+        void onTransformStart(int mode);
+
         /**
          * @param mode STATE_TRANSFORM_IN 1 ,STATE_TRANSFORM_OUT 2
          */

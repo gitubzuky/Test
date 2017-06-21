@@ -17,10 +17,11 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:text="@string/viewpager_indicator"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/margin_bottom_indicator" />
 </RelativeLayout>

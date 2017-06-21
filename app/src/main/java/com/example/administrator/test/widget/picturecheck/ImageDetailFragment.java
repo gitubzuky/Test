@@ -1,9 +1,12 @@
 
 package com.example.administrator.test.widget.picturecheck;
 
+import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_INDEX;
 import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_URLS;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +19,8 @@ import android.widget.ProgressBar;
 
 import com.example.administrator.test.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -42,6 +47,12 @@ public class ImageDetailFragment extends Fragment {
     private int mWidth;
     private int mHeight;
 
+    private long previousclickTime = 0;// 上一次点击时间
+    // private long clickTimeInterval = 0;// 点击时间间隔
+
+    private boolean isTransforming;// 动画是否在执行中
+    private final String TAG = "ImageBigCheck";
+
     public static ImageDetailFragment newInstance(int position, String imageUrl) {
         final ImageDetailFragment f = new ImageDetailFragment();
 
@@ -49,7 +60,6 @@ public class ImageDetailFragment extends Fragment {
         args.putString("url", imageUrl);
         args.putInt("position", position);
         f.setArguments(args);
-
         return f;
     }
 
@@ -64,6 +74,7 @@ public class ImageDetailFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.image_detail_fragment, container, false);
+
         // mImageView = (ImageView) v.findViewById(R.id.image);
         progressBar = (ProgressBar) v.findViewById(R.id.loading);
         initImageView();
@@ -76,7 +87,7 @@ public class ImageDetailFragment extends Fragment {
     private void initImageView() {
         mDatas = (ArrayList<String>) getActivity().getIntent()
                 .getSerializableExtra(EXTRA_IMAGE_URLS);
-        showPosition = getActivity().getIntent().getIntExtra("position", 0);
+        showPosition = getActivity().getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);// 点击的图片的position
 
         mLocationX = getActivity().getIntent().getIntExtra("locationX", 0);
         mLocationY = getActivity().getIntent().getIntExtra("locationY", 0);
@@ -84,49 +95,129 @@ public class ImageDetailFragment extends Fragment {
         mHeight = getActivity().getIntent().getIntExtra("height", 0);
 
         imageView = (SmoothImageView) v.findViewById(R.id.image);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setOriginalInfo(mWidth, mHeight, mLocationX, mLocationY);
-        imageView.transformIn();
+
+        showBigPicture();
+
+        Log.e(TAG, TAG + ": -> initImageView");
         imageView.setLayoutParams(
                 new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                         FrameLayout.LayoutParams.MATCH_PARENT));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ImageLoader.getInstance().displayImage(mDatas.get(mPosition),
-                imageView);
+                imageView, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        Log.e(TAG, TAG + ": -> onLoadingStarted");
+                        if (mPosition != showPosition) {
+                            v.setBackgroundColor(Color.BLACK);
+                        }
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        // imageView.setAlpha(0.0f);
+                        // v.setBackgroundColor(Color.parseColor("#00000000"));
+                        Log.e(TAG, TAG + ": -> onLoadingComplete");
+                        v.setBackgroundColor(Color.TRANSPARENT);
+                        showBigPicture();
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+    }
+
+    private void showBigPicture() {
+        if (showPosition == mPosition) {
+            // 执行放大到大图的动画
+            imageView.setOriginalInfo(mWidth, mHeight, mLocationX,
+                    mLocationY);
+            imageView.transformIn();
+        } else {
+            bindPhotoView();// 没有放大到大图的过程动画，直接绑定手势缩放操作
+        }
         imageView.setOnTransformListener(new SmoothImageView.TransformListener() {
             @Override
-            public void onTransformComplete(int mode) {
+            public void onTransformStart(int mode) {
+                isTransforming = true;
+
                 if (mode == SmoothImageView.STATE_TRANSFORM_IN) {
-                    imageView
-                            .setLayoutParams(new FrameLayout.LayoutParams(
-                                    FrameLayout.LayoutParams.MATCH_PARENT,
-                                    FrameLayout.LayoutParams.MATCH_PARENT));
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    // 动画执行完后再绑定手势操作
-                    mAttacher = new PhotoViewAttacher(imageView);
-
-                    mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
-
-                        @Override
-                        public void onPhotoTap(View arg0, float arg1, float arg2) {
-                            imageView.transformOut();
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            ImageLoader.getInstance().displayImage(mDatas.get(mPosition),
-                                    imageView);
-                        }
-
-                        @Override
-                        public void onOutsidePhotoTap() {
-
-                        }
-                    });
-                    progressBar.setVisibility(View.GONE);
+                    // 这里是从缩略图放大到大图的动画的开始，不用做其他操作
+                    Log.e(TAG, TAG + ": -> onTransformStart_IN:isTransforming = "
+                            + isTransforming);
                 } else {
+                    Log.e(TAG, TAG + ": -> onTransformStart_OUT:isTransforming = "
+                            + isTransforming);
+                    // 下面这一步操作是为了解决这一个bug
+                    //
+                    // 问题：
+                    // 在图片缩小回原缩略图的过程中（注意是执行过渡动画的过程中），双击图片，会发生一个crash
+                    // （把下面这个设置监听器的代码注释掉然后点击图片缩小回缩略图的过程中再双击一下就可以复现）
+                    //
+                    // 原因：
+                    // 主要是在缩小回原缩略图的过程中再双击控件，会执行photoview的放大操作，
+                    // 但是图片又在缩小，缩小的时候就会setScaleType(),而photoview是不允许绑定了imageview之后再次setScaleType()的，
+                    // 所以就会发生crash(包括在缩小过程做任何有关photoview的操作都会出现crash)
+                    //
+                    // 解决:
+                    // 所以只要在缩小动画开始之前将photoview所绑定的imageview清除掉就行了
+                    mAttacher.cleanup();
+                }
+            }
+
+            @Override
+            public void onTransformComplete(int mode) {
+                previousclickTime = System.currentTimeMillis();
+                if (mode == SmoothImageView.STATE_TRANSFORM_IN) {
+                    isTransforming = false;
+                    Log.e(TAG, TAG + ": -> onTransformComplete_IN:isTransforming = "
+                            + isTransforming);
+                    // 放大的动画执行完后再绑定手势操作
+                    bindPhotoView();
+                } else {
+                    Log.e(TAG, TAG + ": -> onTransformComplete_OUT");
                     Intent it = new Intent();
                     it.putExtra("currentPosition", mPosition);
                     getActivity().setResult(1, it);
                     getActivity().finish();
                     getActivity().overridePendingTransition(0, 0);
+                }
+            }
+        });
+    }
+
+    // 绑定手势缩放操作
+    private void bindPhotoView() {
+        mAttacher = new PhotoViewAttacher(imageView);
+
+        mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
+
+            @Override
+            public void onPhotoTap(View arg0, float arg1, float arg2) {
+                Log.e(TAG, TAG + ": -> onPhotoTap");
+                if (isTransforming) {
+                    return;
+                }
+                imageView.setOriginalInfo(mWidth, mHeight, mLocationX, mLocationY);
+                imageView.transformOut();
+            }
+
+            @Override
+            public void onOutsidePhotoTap() {
+                Log.e(TAG, TAG + ": -> onOutsidePhotoTap");
+                if (System.currentTimeMillis()
+                        - previousclickTime < 500) {
+                    return;
                 }
             }
         });
@@ -179,6 +270,15 @@ public class ImageDetailFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // super.onActivityResult(requestCode, resultCode, data);
-        Log.d("onActivityResult", data.getIntExtra("currentPosition", 0) + "");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isTransforming = false;
+        Log.e(TAG, TAG
+                + ": -> onDestroy:isTransforming = false");
+        Log.e(TAG,
+                "------------------------------------ finish --------------------------------------");
     }
 }

@@ -73,34 +73,38 @@
         android:text="ConstrainLayout测试标题" />
 
     <TextView
+        android:id="@+id/act_constraint_test_tv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/act_constraint_test_tv_left"
-        android:text="上一批"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintRight_toLeftOf="@+id/act_constraint_test_iv_meizi"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintTop_toTopOf="@+id/act_constraint_test_iv_meizi"
+        android:layout_marginStart="16dp"
+        android:paddingBottom="@dimen/padding_text_big"
+        android:paddingTop="@dimen/padding_text_big"
+        android:text="上一批"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/act_constraint_test_iv_meizi"
-        android:textSize="18sp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/act_constraint_test_iv_meizi"
+        app:layout_constraintTop_toTopOf="@+id/act_constraint_test_iv_meizi" />
 
     <TextView
+        android:id="@+id/act_constraint_test_tv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/act_constraint_test_tv_right"
-        android:text="下一批"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/act_constraint_test_iv_meizi"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintTop_toTopOf="@+id/act_constraint_test_iv_meizi"
-        app:layout_constraintBottom_toBottomOf="@+id/act_constraint_test_iv_meizi"
         android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
-        android:textSize="18sp" />
+        android:layout_marginStart="8dp"
+        android:paddingBottom="@dimen/padding_text_big"
+        android:paddingTop="@dimen/padding_text_big"
+        android:text="下一批"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_constraint_test_iv_meizi"
+        app:layout_constraintLeft_toRightOf="@+id/act_constraint_test_iv_meizi"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/act_constraint_test_iv_meizi" />
 
 
 </android.support.constraint.ConstraintLayout>

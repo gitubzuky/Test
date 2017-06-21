@@ -3,8 +3,6 @@ package com.example.administrator.test.presenter;
 
 import android.app.Activity;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-
 /**
  * Created by Administrator on 2017/2/10.
  */
@@ -23,6 +21,14 @@ public interface IMeiziPresenter {
 
     void loadPreviousGroupOfMeizi();
 
-    void showBigPic(Activity activity, int locationX, int locationY, int width, int height,
-            DisplayImageOptions options);
+    /**
+     * 点击图片查看大图
+     * 
+     * @param activity 当前activity
+     * @param locationX 点击的图片的x坐标
+     * @param locationY 点击的图片的y坐标
+     * @param width 点击的图片的宽
+     * @param height 点击的图片的高
+     */
+    void showBigPic(Activity activity, int locationX, int locationY, int width, int height);
 }

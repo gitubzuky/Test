@@ -1,6 +1,7 @@
 
 package com.example.administrator.test.presenter;
 
+import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_INDEX;
 import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_URLS;
 
 import android.app.Activity;
@@ -24,7 +25,6 @@ import com.lib.mylib.http.BaseHttpCallBack;
 import com.lib.mylib.http.BaseRequest;
 import com.lib.mylib.http.HttpCallBack;
 import com.lib.mylib.http.HttpRequestUtil;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +45,8 @@ public class MeiziPresenter implements IMeiziPresenter {
     private int page = 1;
     private int limit = 10;
     private String dataType = "福利";
+
+    private long previousClickTime = 0; // 用于抖动过滤
 
     public MeiziPresenter(IMeiziView ivConstraintTest) {
         this.ivConstraintTest = ivConstraintTest;
@@ -114,8 +116,10 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     @Override
     public void loadMeiziByPosition(int position) {
-        this.position = position;
-        ivConstraintTest.setImage(meiziList.get(position).getUrl());
+        if (position >= 0 && position < meiziList.size()) {
+            this.position = position;
+            ivConstraintTest.setImage(meiziList.get(position).getUrl());
+        }
     }
 
     @Override
@@ -193,13 +197,25 @@ public class MeiziPresenter implements IMeiziPresenter {
     }
 
     @Override
-    public void showBigPic(Activity activity, int locationX, int locationY, int width, int height,
-            DisplayImageOptions options) {
+    public void showBigPic(Activity activity, int locationX, int locationY, int width, int height) {
+
+        if (System.currentTimeMillis() - previousClickTime < 500) {// 抖动点击过滤
+            return;
+        }
+
+        ArrayList<String> imgList = getImgList(meiziList);
+        if (imgList == null || imgList.isEmpty()) {
+            return;
+        }
         Intent it = new Intent();
         it.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         it.setClass(activity, BigPictureActivity.class);
-        it.putExtra("position", position);
-        ArrayList<String> imgList = getImgList(meiziList);
+        if (position >= 0) {
+            it.putExtra(EXTRA_IMAGE_INDEX, position);
+        } else {
+            it.putExtra(EXTRA_IMAGE_INDEX, meiziList.size() - 1);
+        }
+
         it.putExtra("locationX", locationX);
         it.putExtra("locationY", locationY);
         // int[] imgSize =
@@ -216,7 +232,7 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     /**
      * 根据图片宽高比计算出实际宽高
-     * 
+     *
      * @param proportion
      * @return
      */
@@ -251,8 +267,10 @@ public class MeiziPresenter implements IMeiziPresenter {
 
     private ArrayList<String> getImgList(List<ResultsBean> meiziList) {
         ArrayList<String> imgUrls = new ArrayList<>();
-        for (int i = 0; i < meiziList.size(); i++) {
-            imgUrls.add(meiziList.get(i).getUrl());
+        if (meiziList != null && !meiziList.isEmpty()) {
+            for (int i = 0; i < meiziList.size(); i++) {
+                imgUrls.add(meiziList.get(i).getUrl());
+            }
         }
         return imgUrls;
     }

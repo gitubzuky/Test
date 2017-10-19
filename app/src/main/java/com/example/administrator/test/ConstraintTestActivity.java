@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
+import com.example.administrator.test.presenter.IMeiziPresenter;
 import com.example.administrator.test.presenter.MeiziPresenter;
 import com.example.administrator.test.view.IMeiziView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -38,7 +39,7 @@ public class ConstraintTestActivity extends AppCompatActivity
 
     DisplayImageOptions options;
 
-    MeiziPresenter presenter;
+    IMeiziPresenter presenter;
 
     private final String TYPE_FULI = "福利";
 

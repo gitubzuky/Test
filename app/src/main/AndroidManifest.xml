@@ -26,13 +26,16 @@
         <activity
             android:name=".ConstraintTestActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".VideoActivity" />
+        <activity
+            android:name=".WidgetActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".MessageCenterActivity" />
         <activity
             android:name=".widget.picturecheck.BigPictureActivity"
-            android:theme="@style/Transparent"></activity>
-        <activity android:name=".temp.bigpicture.BigActivity"></activity>
+            android:theme="@style/Transparent" />
+        <activity android:name=".temp.bigpicture.BigActivity" />
         <activity android:name=".temp.bigpicture.ImagePagerActivity" />
+        <activity android:name=".CalActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.test.CalActivity">
+
+    <RelativeLayout
+        android:id="@+id/act_cal_rl_data_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:id="@+id/tv_last_m_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上一次月经日期"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/act_cal_et_last_m_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_last_m_date"
+            android:layout_alignTop="@+id/tv_last_m_date"
+            android:layout_marginRight="20dp" />
+
+        <TextView
+            android:id="@+id/act_cal_tv_m_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="月经周期天数"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:layout_below="@id/tv_last_m_date" />
+
+        <EditText
+            android:id="@+id/act_cal_et_m_period"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/act_cal_tv_m_period"
+            android:layout_alignTop="@+id/act_cal_tv_m_period"
+            android:layout_marginRight="20dp" />
+
+        <TextView
+            android:id="@+id/act_cal_tv_m_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="月经天数"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:layout_below="@id/act_cal_tv_m_period" />
+
+        <EditText
+            android:id="@+id/act_cal_et_m_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/act_cal_tv_m_days"
+            android:layout_alignTop="@+id/act_cal_tv_m_days"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:id="@+id/act_cal_btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:layout_below="@+id/act_cal_tv_m_days"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/act_cal_rl_month_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/act_cal_rl_data_input">
+
+        <ImageView
+            android:id="@+id/act_cal_tv_left_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/act_cal_tv_month"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_right_arrow" />
+
+        <TextView
+            android:id="@+id/act_cal_tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="2017年06月"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/act_cal_tv_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/act_cal_tv_month"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_right_arrow" />
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/act_cal_gv_week_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/act_cal_rl_month_top_bar"
+        android:numColumns="1"></GridView>
+
+    <com.example.administrator.test.widget.NOScrollGridView
+        android:id="@+id/act_cal_gv_week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/act_cal_gv_week_tag"
+        android:numColumns="7" />
+</RelativeLayout>

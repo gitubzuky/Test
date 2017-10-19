@@ -26,7 +26,7 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
     protected void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) {
-            mPresenter.detachView();
+            // mPresenter.detachView();
         }
     }
 }

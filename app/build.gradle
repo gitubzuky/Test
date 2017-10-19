@@ -36,6 +36,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
-    testCompile 'junit:junit:4.12'
     compile 'com.github.chrisbanes:PhotoView:1.+'
+    testCompile 'junit:junit:4.12'
 }

@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.example.administrator.test.ConstraintTestActivity;
 import com.example.administrator.test.R;
 import com.example.administrator.test.TestActivity;
-import com.example.administrator.test.VideoActivity;
+import com.example.administrator.test.WidgetActivity;
 import com.example.administrator.test.model.TestBean;
 import com.example.administrator.test.view.IView;
 
@@ -63,7 +63,7 @@ public class MainPresenter implements IPresenter {
                 // vMain.setTitleTextColor(R.color.colorAccent);
                 // vMain.showToast(dataList.get(position).getText(),
                 // Toast.LENGTH_SHORT);
-                startActivity(VideoActivity.class);
+                startActivity(WidgetActivity.class);
                 break;
             default:
                 break;

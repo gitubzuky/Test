@@ -37,5 +37,8 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
     compile 'com.github.chrisbanes:PhotoView:1.+'
+    compile('com.alibaba.android:vlayout:1.0.9@aar') {
+        transitive = true
+    }
     testCompile 'junit:junit:4.12'
 }

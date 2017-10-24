@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.test.R;
-import com.example.administrator.test.model.TestBean;
+import com.example.administrator.test.model.FunctionBean;
 
 import java.util.List;
 
@@ -19,17 +19,17 @@ import java.util.List;
  */
 public class MainAdapter extends BaseHolderAdapter {
     private View view;
-    private List<TestBean> dataList;
+    private List<FunctionBean> dataList;
     private Context context;
 
-    public MainAdapter(Context context, List<TestBean> dataList) {
+    public MainAdapter(Context context, List<FunctionBean> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return (position % 3 == 0) ? 0 : 1;
+        return dataList.get(position).getType();
     }
 
     @Override

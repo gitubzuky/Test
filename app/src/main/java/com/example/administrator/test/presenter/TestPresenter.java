@@ -3,7 +3,7 @@ package com.example.administrator.test.presenter;
 
 import android.widget.Toast;
 
-import com.example.administrator.test.model.TestBean;
+import com.example.administrator.test.model.FunctionBean;
 import com.example.administrator.test.view.IView;
 
 /**
@@ -13,7 +13,7 @@ import com.example.administrator.test.view.IView;
 public class TestPresenter implements ILoginPresenter {
     private IView ivTest;
 
-    private TestBean bean;
+    private FunctionBean bean;
 
     public TestPresenter(IView ivTest) {
         this.ivTest = ivTest;

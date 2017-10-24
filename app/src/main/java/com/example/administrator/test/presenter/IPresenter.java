@@ -1,8 +1,9 @@
+
 package com.example.administrator.test.presenter;
 
 import android.view.View;
 
-import com.example.administrator.test.model.TestBean;
+import com.example.administrator.test.model.FunctionBean;
 
 import java.util.List;
 
@@ -10,10 +11,11 @@ import java.util.List;
  * Created by Administrator on 2016/9/13.
  */
 public interface IPresenter {
-    List<TestBean> getData();
+    List<FunctionBean> getData();
 
     /**
      * 处理list的item点击事件
+     * 
      * @param view
      * @param position
      * @param l

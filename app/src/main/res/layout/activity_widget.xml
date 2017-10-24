@@ -82,7 +82,7 @@
                 android:textColor="@color/color_black_000000" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <!--<android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -117,7 +117,15 @@
                     android:text="内容"
                     android:gravity="center" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.NestedScrollView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_v_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.design.widget.CoordinatorLayout>
     <!--<com.example.administrator.test.widget.wheelview.WheelView--><!--android:id="@+id/wv"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentBottom="true"--><!--android:padding="50dp" />-->

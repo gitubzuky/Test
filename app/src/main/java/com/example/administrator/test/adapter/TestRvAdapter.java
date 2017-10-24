@@ -1,7 +1,7 @@
+
 package com.example.administrator.test.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +39,19 @@ public class TestRvAdapter extends BaseRvAdapter<TestRvAdapter.ViewHolder> {
 
     @Override
     protected void doinBindViewHolder(ViewHolder holder, int position) {
-
+        if (datalist != null && !datalist.isEmpty()) {
+            holder.tvTest.setText(datalist.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return datalist.size();
     }
 
-    public class ViewHolder extends BaseRvAdapter.ViewHolder{
+    public class ViewHolder extends BaseRvAdapter.ViewHolder {
         TextView tvTest;
+
         public ViewHolder(View itemView) {
             super(itemView);
             tvTest = (TextView) itemView.findViewById(R.id.tv_item_test);

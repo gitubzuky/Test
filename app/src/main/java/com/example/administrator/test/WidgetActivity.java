@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.android.vlayout.DelegateAdapter;
+import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.example.administrator.test.adapter.WidgetLinearAdapter;
+import com.example.administrator.test.adapter.WidgetSingleAdapter;
 import com.example.administrator.test.model.WvBean;
 import com.example.administrator.test.widget.MyTestSwitch;
 
@@ -18,6 +23,8 @@ public class WidgetActivity extends AppCompatActivity
     MyTestSwitch myTestSwitch;
     // WheelView wv;
     ArrayList<WvBean> list;
+
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,24 @@ public class WidgetActivity extends AppCompatActivity
         });
 
         showWv();
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_v_layout);
+        final VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+        recyclerView.setRecycledViewPool(viewPool);
+        viewPool.setMaxRecycledViews(0, 10);
+
+        DelegateAdapter adapters = new DelegateAdapter(layoutManager);
+        WidgetSingleAdapter widgetAdapter = new WidgetSingleAdapter(WidgetActivity.this);
+        adapters.addAdapter(widgetAdapter);
+        WidgetLinearAdapter widgetLinearAdapter = new WidgetLinearAdapter(WidgetActivity.this);
+        adapters.addAdapter(widgetLinearAdapter);
+
+        recyclerView.setAdapter(adapters);
+
     }
 
     private void showWv() {
@@ -55,6 +80,7 @@ public class WidgetActivity extends AppCompatActivity
         // wv.setItemsVisible(3);
         // wv.setCyclic(false);
         // wv.setLineSpacingMultiplier(2.5f);
+
     }
 
     @Override

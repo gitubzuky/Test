@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.model;
+package com.example.administrator.test.model.widgettest;
 
 /**
  * Created by Administrator on 2017/6/26.

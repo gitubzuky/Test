@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
-import com.example.administrator.test.presenter.IMeiziPresenter;
-import com.example.administrator.test.presenter.MeiziPresenter;
-import com.example.administrator.test.view.IMeiziView;
+import com.example.administrator.test.presenter.meizi.IMeiziPresenter;
+import com.example.administrator.test.presenter.meizi.MeiziPresenter;
+import com.example.administrator.test.view.meizi.IMeiziView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;

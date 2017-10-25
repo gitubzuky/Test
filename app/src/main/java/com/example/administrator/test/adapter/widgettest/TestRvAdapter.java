@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.adapter;
+package com.example.administrator.test.adapter.widgettest;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.test.R;
+import com.example.administrator.test.adapter.BaseRvAdapter;
 
 import java.util.List;
 

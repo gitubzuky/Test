@@ -1,5 +1,7 @@
 
-package com.example.administrator.test.view;
+package com.example.administrator.test.view.meizi;
+
+import com.example.administrator.test.view.home.IView;
 
 /**
  * Created by Administrator on 2017/2/10.

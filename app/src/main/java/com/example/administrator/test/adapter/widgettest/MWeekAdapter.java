@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.adapter;
+package com.example.administrator.test.adapter.widgettest;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.test.R;
-import com.example.administrator.test.model.MDataBean;
+import com.example.administrator.test.model.widgettest.MDataBean;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.model;
+package com.example.administrator.test.model.home;
 
 /**
  * Created by Administrator on 2016/9/13.

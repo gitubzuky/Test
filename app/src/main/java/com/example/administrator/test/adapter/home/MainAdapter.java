@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.adapter;
+package com.example.administrator.test.adapter.home;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.test.R;
-import com.example.administrator.test.model.FunctionBean;
+import com.example.administrator.test.adapter.BaseHolderAdapter;
+import com.example.administrator.test.model.home.FunctionBean;
 
 import java.util.List;
 

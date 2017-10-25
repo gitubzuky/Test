@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
-import com.example.administrator.test.presenter.ILoginPresenter;
-import com.example.administrator.test.presenter.TestPresenter;
-import com.example.administrator.test.view.IView;
+import com.example.administrator.test.presenter.meizi.ILoginPresenter;
+import com.example.administrator.test.presenter.meizi.TestPresenter;
+import com.example.administrator.test.view.home.IView;
 
 /**
  * Created by Administrator on 2016/10/14.

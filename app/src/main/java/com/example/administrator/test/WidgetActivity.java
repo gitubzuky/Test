@@ -11,15 +11,16 @@ import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
-import com.example.administrator.test.adapter.WidgetLinearAdapter;
-import com.example.administrator.test.adapter.WidgetSingleAdapter;
-import com.example.administrator.test.model.WvBean;
+import com.example.administrator.test.adapter.widgettest.WidgetLinearAdapter;
+import com.example.administrator.test.adapter.widgettest.WidgetSingleAdapter;
+import com.example.administrator.test.model.widgettest.WvBean;
+import com.example.administrator.test.view.widgettest.IWidgetTestView;
 import com.example.administrator.test.widget.MyTestSwitch;
 
 import java.util.ArrayList;
 
 public class WidgetActivity extends AppCompatActivity
-        implements MyTestSwitch.OnStateChangeListener {
+        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener {
     MyTestSwitch myTestSwitch;
     // WheelView wv;
     ArrayList<WvBean> list;
@@ -59,10 +60,10 @@ public class WidgetActivity extends AppCompatActivity
         viewPool.setMaxRecycledViews(0, 10);
 
         DelegateAdapter adapters = new DelegateAdapter(layoutManager);
-        WidgetSingleAdapter widgetAdapter = new WidgetSingleAdapter(WidgetActivity.this);
-        adapters.addAdapter(widgetAdapter);
-        WidgetLinearAdapter widgetLinearAdapter = new WidgetLinearAdapter(WidgetActivity.this);
-        adapters.addAdapter(widgetLinearAdapter);
+        WidgetSingleAdapter singleAdapter = new WidgetSingleAdapter(WidgetActivity.this);
+        adapters.addAdapter(singleAdapter);
+        WidgetLinearAdapter linearAdapter = new WidgetLinearAdapter(WidgetActivity.this);
+        adapters.addAdapter(linearAdapter);
 
         recyclerView.setAdapter(adapters);
 
@@ -92,4 +93,23 @@ public class WidgetActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void showToast(String toast, int duration) {
+
+    }
+
+    @Override
+    public void vLayoutAddAdapter(DelegateAdapter adapter) {
+
+    }
+
+    @Override
+    public void vLayoutNotifyDataChange() {
+
+    }
+
+    @Override
+    public void setState(boolean state) {
+
+    }
 }

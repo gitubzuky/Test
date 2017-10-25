@@ -1,7 +1,7 @@
 
 package com.example.administrator.test.request;
 
-import com.example.administrator.test.model.MeiziTestBean;
+import com.example.administrator.test.model.meizi.MeiziTestBean;
 import com.lib.mylib.http.HttpRequestService;
 
 import retrofit2.Call;

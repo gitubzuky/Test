@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.administrator.test.model.MeiziTestBean;
+import com.example.administrator.test.model.meizi.MeiziTestBean;
 import com.example.administrator.test.request.RequestForMeizi;
 import com.lib.mylib.http.BaseConverterFactory;
 

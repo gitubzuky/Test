@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.view;
+package com.example.administrator.test.view.home;
 
 import android.support.annotation.ColorRes;
 

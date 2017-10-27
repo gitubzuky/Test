@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.presenter;
+package com.example.administrator.test.presenter.meizi;
 
 import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_INDEX;
 import static com.example.administrator.test.widget.picturecheck.BigPictureActivity.EXTRA_IMAGE_URLS;
@@ -12,9 +12,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.administrator.test.model.MeiziTestBean;
-import com.example.administrator.test.model.MeiziTestBean.ResultsBean;
-import com.example.administrator.test.view.IMeiziView;
+import com.example.administrator.test.model.meizi.MeiziTestBean;
+import com.example.administrator.test.model.meizi.MeiziTestBean.ResultsBean;
+import com.example.administrator.test.view.meizi.IMeiziView;
 import com.example.administrator.test.widget.picturecheck.BigPictureActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

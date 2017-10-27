@@ -1,10 +1,10 @@
 
-package com.example.administrator.test.presenter;
+package com.example.administrator.test.presenter.meizi;
 
 import android.widget.Toast;
 
-import com.example.administrator.test.model.FunctionBean;
-import com.example.administrator.test.view.IView;
+import com.example.administrator.test.model.home.FunctionBean;
+import com.example.administrator.test.view.home.IView;
 
 /**
  * Created by Administrator on 2017/2/4.

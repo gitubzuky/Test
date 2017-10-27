@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.presenter;
+package com.example.administrator.test.presenter.home;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import com.example.administrator.test.ConstraintTestActivity;
 import com.example.administrator.test.R;
 import com.example.administrator.test.TestActivity;
 import com.example.administrator.test.WidgetActivity;
-import com.example.administrator.test.model.FunctionBean;
-import com.example.administrator.test.view.IView;
+import com.example.administrator.test.model.home.FunctionBean;
+import com.example.administrator.test.view.home.IView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class MainPresenter implements IPresenter {
     /**
      * 添加功能项
      *
-     * @param type  界面类型
+     * @param type 界面类型
      * @param title 功能标题
      */
     private void addFunction(int type, String title) {
@@ -59,7 +59,6 @@ public class MainPresenter implements IPresenter {
         functionBean.setText(title);
         dataList.add(functionBean);
     }
-
 
     @Override
     public void doItemClick(final View view, int position, long l, int viewType) {
@@ -73,26 +72,27 @@ public class MainPresenter implements IPresenter {
                 startActivity(WidgetActivity.class);
                 break;
         }
-//        switch (viewType) {
-//            case 0:
-//                // ImageView ivItem = (ImageView)
-//                // view.findViewById(R.id.iv_item);
-//                // setImage(ivItem);
-//                vMain.setTitleTextColor(R.color.colorPrimary);
-//                vMain.showToast(dataList.get(position).getText(), Toast.LENGTH_SHORT);
-//                startConstraintActicity();
-//                break;
-//            case 1:
-//                // showListToast();// 测试一下git分支
-//                // startTestActivity();
-//                // vMain.setTitleTextColor(R.color.colorAccent);
-//                // vMain.showToast(dataList.get(position).getText(),
-//                // Toast.LENGTH_SHORT);
-//                startActivity(WidgetActivity.class);
-//                break;
-//            default:
-//                break;
-//        }
+        // switch (viewType) {
+        // case 0:
+        // // ImageView ivItem = (ImageView)
+        // // view.findViewById(R.id.iv_item);
+        // // setImage(ivItem);
+        // vMain.setTitleTextColor(R.color.colorPrimary);
+        // vMain.showToast(dataList.get(position).getText(),
+        // Toast.LENGTH_SHORT);
+        // startConstraintActicity();
+        // break;
+        // case 1:
+        // // showListToast();// 测试一下git分支
+        // // startTestActivity();
+        // // vMain.setTitleTextColor(R.color.colorAccent);
+        // // vMain.showToast(dataList.get(position).getText(),
+        // // Toast.LENGTH_SHORT);
+        // startActivity(WidgetActivity.class);
+        // break;
+        // default:
+        // break;
+        // }
 
     }
 

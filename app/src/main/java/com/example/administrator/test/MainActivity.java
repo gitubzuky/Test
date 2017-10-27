@@ -11,10 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.test.adapter.MainAdapter;
-import com.example.administrator.test.presenter.IPresenter;
-import com.example.administrator.test.presenter.MainPresenter;
-import com.example.administrator.test.view.IView;
+import com.example.administrator.test.adapter.home.MainAdapter;
+import com.example.administrator.test.presenter.home.IPresenter;
+import com.example.administrator.test.presenter.home.MainPresenter;
+import com.example.administrator.test.view.home.IView;
 
 public class MainActivity extends AppCompatActivity
         implements IView, AdapterView.OnItemClickListener {

@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.administrator.test.adapter.MWeekAdapter;
-import com.example.administrator.test.model.MDataBean;
+import com.example.administrator.test.adapter.widgettest.MWeekAdapter;
+import com.example.administrator.test.model.widgettest.MDataBean;
 import com.example.administrator.test.widget.NOScrollGridView;
 
 import java.text.DateFormat;

@@ -1,9 +1,9 @@
 
-package com.example.administrator.test.presenter;
+package com.example.administrator.test.presenter.home;
 
 import android.view.View;
 
-import com.example.administrator.test.model.FunctionBean;
+import com.example.administrator.test.model.home.FunctionBean;
 
 import java.util.List;
 

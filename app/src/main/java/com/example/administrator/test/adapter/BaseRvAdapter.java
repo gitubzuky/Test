@@ -3,44 +3,50 @@ package com.example.administrator.test.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by Administrator on 2016/10/14.
  */
 public abstract class BaseRvAdapter<BH extends BaseRvAdapter.ViewHolder>
-        extends RecyclerView.Adapter<BH> {
+        extends RecyclerView.Adapter<BH> implements View.OnClickListener, View.OnLongClickListener {
 
     private OnRvItemClickListener rvItemClickListener;
     private OnRvItemLongClickListener rvItemLongClickListener;
 
     @Override
-    public void onBindViewHolder(BH holder, final int position) {
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (rvItemClickListener != null) {
-                    rvItemClickListener.OnRvItemClick(v, position);
-                }
-            }
-        });
-        holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (rvItemLongClickListener != null) {
-                    rvItemLongClickListener.OnRvItemLongClick(v, position);
-                }
-                return true;
-            }
-        });
+    public BH onCreateViewHolder(ViewGroup parent, int viewType) {
+        BH holder = doOnCreateViewHolder(parent, viewType);
+        holder.rootView.setOnClickListener(this);
+        holder.rootView.setOnLongClickListener(this);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(BH holder, int position) {
+        holder.rootView.setTag(position);
         /*
          * 主要防止在继承BaseAapter时忘记重载onBindViewHolder(),干脆就加多一个抽象方法来处理业务逻辑
          */
-        doinBindViewHolder(holder, position);
+        doOnBindViewHolder(holder, position);
     }
 
-    protected abstract void doinBindViewHolder(BH holder, int position);
+    /**
+     * 添加原本onCreateViewHolder()中的逻辑
+     * @param parent
+     * @param viewType
+     * @return
+     */
+    protected abstract BH doOnCreateViewHolder(ViewGroup parent, int viewType);
 
-    /*
+    /**
+     * 添加原本onBindViewHolder()中的逻辑
+     * @param holder
+     * @param position
+     */
+    protected abstract void doOnBindViewHolder(BH holder, int position);
+
+    /**
      * 主要是弥补RecyclerView中没有的onItemClickListener和onItemClickListener，
      * 要是后续需要开放其他RecyclerView没有的事件可以在这里仿照着添加回调
      */
@@ -48,8 +54,27 @@ public abstract class BaseRvAdapter<BH extends BaseRvAdapter.ViewHolder>
         this.rvItemClickListener = rvItemClickListener;
     }
 
+    /**
+     * 主要是弥补RecyclerView中没有的onItemClickListener和onItemClickListener，
+     * 要是后续需要开放其他RecyclerView没有的事件可以在这里仿照着添加回调
+     */
     public void setRvItemLongClickListener(OnRvItemLongClickListener rvItemLongClickListener) {
         this.rvItemLongClickListener = rvItemLongClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (rvItemClickListener != null) {
+            rvItemClickListener.OnRvItemClick(v, (Integer) v.getTag());
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (rvItemLongClickListener != null) {
+            return rvItemLongClickListener.OnRvItemLongClick(v, (Integer) v.getTag());
+        }
+        return true;
     }
 
     public interface OnRvItemClickListener {
@@ -57,7 +82,7 @@ public abstract class BaseRvAdapter<BH extends BaseRvAdapter.ViewHolder>
     }
 
     public interface OnRvItemLongClickListener {
-        void OnRvItemLongClick(View view, int position);
+        boolean OnRvItemLongClick(View view, int position);
     }
 
     public abstract class ViewHolder extends RecyclerView.ViewHolder {

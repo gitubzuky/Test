@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.model;
+package com.example.administrator.test.model.meizi;
 
 import java.util.List;
 

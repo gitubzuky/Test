@@ -1,5 +1,5 @@
 
-package com.example.administrator.test.adapter;
+package com.example.administrator.test.adapter.widgettest;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.test.R;
+import com.example.administrator.test.adapter.BaseRvAdapter;
 
 import java.util.List;
 
@@ -30,15 +31,16 @@ public class TestRvAdapter extends BaseRvAdapter<TestRvAdapter.ViewHolder> {
         return super.getItemViewType(position);
     }
 
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected ViewHolder doOnCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(context).inflate(R.layout.layout_item_test, parent, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
 
     @Override
-    protected void doinBindViewHolder(ViewHolder holder, int position) {
+    protected void doOnBindViewHolder(ViewHolder holder, int position) {
         if (datalist != null && !datalist.isEmpty()) {
             holder.tvTest.setText(datalist.get(position));
         }

@@ -14,7 +14,7 @@ public interface IWidgetTestView extends IBaseView {
      * 
      * @param adapter
      */
-    void vLayoutAddAdapter(DelegateAdapter adapter);
+    void vLayoutAddAdapter(DelegateAdapter.Adapter adapter);
 
     /**
      * vLayout刷新
@@ -26,5 +26,5 @@ public interface IWidgetTestView extends IBaseView {
      * 
      * @param state
      */
-    void setState(boolean state);
+    void changeState(boolean state);
 }

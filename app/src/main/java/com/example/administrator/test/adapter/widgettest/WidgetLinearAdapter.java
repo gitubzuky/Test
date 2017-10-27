@@ -13,6 +13,8 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.example.administrator.test.R;
+import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
+import com.example.administrator.test.adapter.OnVLayoutItemLongClickListener;
 
 /**
  * Created by Administrator on 2017/10/23.
@@ -21,6 +23,8 @@ import com.example.administrator.test.R;
 public class WidgetLinearAdapter
         extends DelegateAdapter.Adapter<WidgetLinearAdapter.LinearViewHolder> {
     Activity act;
+    private OnVLayoutItemClickListener onItemClickListener;
+    private OnVLayoutItemLongClickListener onItemLongClickListener;
 
     public WidgetLinearAdapter(Activity act) {
         this.act = act;
@@ -34,6 +38,7 @@ public class WidgetLinearAdapter
 
     @Override
     public void onBindViewHolder(LinearViewHolder holder, int position) {
+        holder.itemView.setTag(position);
         holder.tvContent.setText(position + "");
     }
 
@@ -45,6 +50,14 @@ public class WidgetLinearAdapter
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         return new LinearLayoutHelper();
+    }
+
+    public void setOnItemClickListener(OnVLayoutItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnVLayoutItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     // class MainViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +72,7 @@ public class WidgetLinearAdapter
     // tvContent = (TextView) itemView.findViewById(R.id.tv_content);
     // }
     //
-    class LinearViewHolder extends RecyclerView.ViewHolder {
+    class LinearViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
         public ImageView iv;
         public TextView tvTitle;
         public TextView tvContent;
@@ -70,6 +83,23 @@ public class WidgetLinearAdapter
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvContent = (TextView) itemView.findViewById(R.id.tv_content);
 
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (onItemLongClickListener != null){
+                return onItemLongClickListener.onVLayoutItemLongClick(v, (Integer) v.getTag());
+            }
+            return false;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onItemClickListener != null){
+                onItemClickListener.onVLayoutItemClick(v, (Integer) v.getTag());
+            }
         }
     }
 }

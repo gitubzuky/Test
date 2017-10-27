@@ -7,11 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.example.administrator.test.R;
+import com.example.administrator.test.adapter.BaseRvAdapter;
+import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
+import com.example.administrator.test.adapter.OnVLayoutItemLongClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,8 @@ import java.util.List;
 public class WidgetSingleAdapter
         extends DelegateAdapter.Adapter<WidgetSingleAdapter.SingleViewHolder> {
     Activity act;
+    private OnVLayoutItemClickListener onItemClickListener;
+    private OnVLayoutItemLongClickListener onItemLongClickListener;
 
     public WidgetSingleAdapter(Activity act) {
         this.act = act;
@@ -38,6 +44,7 @@ public class WidgetSingleAdapter
     public void onBindViewHolder(SingleViewHolder holder, int position) {
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -78,7 +85,34 @@ public class WidgetSingleAdapter
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(act);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             rv.setLayoutManager(linearLayoutManager);
+
+            testRvAdapter.setRvItemClickListener(new BaseRvAdapter.OnRvItemClickListener() {
+                @Override
+                public void OnRvItemClick(View view, int position) {
+                    if (onItemClickListener != null){
+                        onItemClickListener.onVLayoutItemClick(view, position);
+                    }
+                }
+            });
+
+            testRvAdapter.setRvItemLongClickListener(new BaseRvAdapter.OnRvItemLongClickListener() {
+                @Override
+                public boolean OnRvItemLongClick(View view, int position) {
+                    if (onItemLongClickListener != null) {
+                        return onItemLongClickListener.onVLayoutItemLongClick(view, position);
+                    }
+                    return true;
+                }
+            });
             rv.setAdapter(testRvAdapter);
         }
+    }
+
+    public void setOnItemClickListener(OnVLayoutItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnVLayoutItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 }

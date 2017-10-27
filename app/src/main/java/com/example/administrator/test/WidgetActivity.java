@@ -11,22 +11,27 @@ import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
 import com.example.administrator.test.adapter.widgettest.WidgetLinearAdapter;
 import com.example.administrator.test.adapter.widgettest.WidgetSingleAdapter;
 import com.example.administrator.test.model.widgettest.WvBean;
+import com.example.administrator.test.presenter.widgettest.IWidgetTestPresenter;
+import com.example.administrator.test.presenter.widgettest.WidgetPresenter;
 import com.example.administrator.test.view.widgettest.IWidgetTestView;
 import com.example.administrator.test.widget.MyTestSwitch;
 
 import java.util.ArrayList;
 
 public class WidgetActivity extends AppCompatActivity
-        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener {
+        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener, OnVLayoutItemClickListener {
     MyTestSwitch myTestSwitch;
     // WheelView wv;
     ArrayList<WvBean> list;
 
     RecyclerView rv;
+    DelegateAdapter adapters;
 
+    IWidgetTestPresenter widgetTestPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,8 @@ public class WidgetActivity extends AppCompatActivity
 
         showWv();
 
+        initPresenter();
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_v_layout);
         final VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
 
@@ -59,14 +66,22 @@ public class WidgetActivity extends AppCompatActivity
         recyclerView.setRecycledViewPool(viewPool);
         viewPool.setMaxRecycledViews(0, 10);
 
-        DelegateAdapter adapters = new DelegateAdapter(layoutManager);
+        adapters = new DelegateAdapter(layoutManager);
         WidgetSingleAdapter singleAdapter = new WidgetSingleAdapter(WidgetActivity.this);
+        singleAdapter.setOnItemClickListener(this);
         adapters.addAdapter(singleAdapter);
         WidgetLinearAdapter linearAdapter = new WidgetLinearAdapter(WidgetActivity.this);
+        linearAdapter.setOnItemClickListener(this);
         adapters.addAdapter(linearAdapter);
 
         recyclerView.setAdapter(adapters);
+    }
 
+    /**
+     * 初始化presenter
+     */
+    private void initPresenter() {
+        widgetTestPresenter = new WidgetPresenter();
     }
 
     private void showWv() {
@@ -95,21 +110,33 @@ public class WidgetActivity extends AppCompatActivity
 
     @Override
     public void showToast(String toast, int duration) {
-
+        Toast.makeText(this, toast, duration).show();
     }
 
     @Override
-    public void vLayoutAddAdapter(DelegateAdapter adapter) {
-
+    public void vLayoutAddAdapter(DelegateAdapter.Adapter adapter) {
+        if (adapters != null){
+            adapters.addAdapter(adapter);
+            adapters.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void vLayoutNotifyDataChange() {
-
+        if (adapters != null){
+            adapters.notifyDataSetChanged();
+        }
     }
 
     @Override
-    public void setState(boolean state) {
+    public void changeState(boolean state) {
+        if (myTestSwitch != null){
+            myTestSwitch.changeState(state);
+        }
+    }
 
+    @Override
+    public void onVLayoutItemClick(View view, int position) {
+        showToast(""+position, Toast.LENGTH_SHORT);
     }
 }

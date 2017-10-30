@@ -24,6 +24,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+/**
+ * meizi 页面
+ */
 public class ConstraintTestActivity extends AppCompatActivity
         implements IMeiziView, View.OnClickListener {
     @ViewInject(R.id.act_constraint_test_iv_meizi)

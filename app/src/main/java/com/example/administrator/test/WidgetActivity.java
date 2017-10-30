@@ -11,9 +11,6 @@ import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
-import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
-import com.example.administrator.test.adapter.widgettest.WidgetLinearAdapter;
-import com.example.administrator.test.adapter.widgettest.WidgetSingleAdapter;
 import com.example.administrator.test.model.widgettest.WvBean;
 import com.example.administrator.test.presenter.widgettest.IWidgetTestPresenter;
 import com.example.administrator.test.presenter.widgettest.WidgetPresenter;
@@ -22,8 +19,11 @@ import com.example.administrator.test.widget.MyTestSwitch;
 
 import java.util.ArrayList;
 
+/**
+ * 控件测试页面
+ */
 public class WidgetActivity extends AppCompatActivity
-        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener, OnVLayoutItemClickListener {
+        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener {
     MyTestSwitch myTestSwitch;
     // WheelView wv;
     ArrayList<WvBean> list;
@@ -67,21 +67,16 @@ public class WidgetActivity extends AppCompatActivity
         viewPool.setMaxRecycledViews(0, 10);
 
         adapters = new DelegateAdapter(layoutManager);
-        WidgetSingleAdapter singleAdapter = new WidgetSingleAdapter(WidgetActivity.this);
-        singleAdapter.setOnItemClickListener(this);
-        adapters.addAdapter(singleAdapter);
-        WidgetLinearAdapter linearAdapter = new WidgetLinearAdapter(WidgetActivity.this);
-        linearAdapter.setOnItemClickListener(this);
-        adapters.addAdapter(linearAdapter);
-
         recyclerView.setAdapter(adapters);
+
+        widgetTestPresenter.initVLayoutAdapter(this);
     }
 
     /**
      * 初始化presenter
      */
     private void initPresenter() {
-        widgetTestPresenter = new WidgetPresenter();
+        widgetTestPresenter = new WidgetPresenter(this);
     }
 
     private void showWv() {
@@ -117,7 +112,6 @@ public class WidgetActivity extends AppCompatActivity
     public void vLayoutAddAdapter(DelegateAdapter.Adapter adapter) {
         if (adapters != null){
             adapters.addAdapter(adapter);
-            adapters.notifyDataSetChanged();
         }
     }
 
@@ -133,10 +127,5 @@ public class WidgetActivity extends AppCompatActivity
         if (myTestSwitch != null){
             myTestSwitch.changeState(state);
         }
-    }
-
-    @Override
-    public void onVLayoutItemClick(View view, int position) {
-        showToast(""+position, Toast.LENGTH_SHORT);
     }
 }

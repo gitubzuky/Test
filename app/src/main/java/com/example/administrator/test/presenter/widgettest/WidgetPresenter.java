@@ -8,6 +8,7 @@ import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
 import com.example.administrator.test.adapter.widgettest.WidgetLinearAdapter;
 import com.example.administrator.test.adapter.widgettest.WidgetSingleAdapter;
 import com.example.administrator.test.view.widgettest.IWidgetTestView;
+import com.lib.mylib.util.JniUtil;
 
 /**
  * 控件测试页面逻辑
@@ -15,6 +16,9 @@ import com.example.administrator.test.view.widgettest.IWidgetTestView;
  */
 public class WidgetPresenter implements IWidgetTestPresenter {
     IWidgetTestView widgetTestView;
+
+
+
     public WidgetPresenter(IWidgetTestView widgetTestView) {
         this.widgetTestView = widgetTestView;
     }
@@ -33,7 +37,8 @@ public class WidgetPresenter implements IWidgetTestPresenter {
         linearAdapter.setOnItemClickListener(new OnVLayoutItemClickListener() {
             @Override
             public void onVLayoutItemClick(View view, int position) {
-                widgetTestView.showToast("纵向item点击："+position, Toast.LENGTH_SHORT);
+//                widgetTestView.showToast("纵向item点击："+position, Toast.LENGTH_SHORT);
+                widgetTestView.showToast(JniUtil.stringFromJNI1() + position, Toast.LENGTH_SHORT);
             }
         });
         widgetTestView.vLayoutAddAdapter(linearAdapter);

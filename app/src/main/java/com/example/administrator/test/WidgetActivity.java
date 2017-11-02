@@ -28,7 +28,7 @@ public class WidgetActivity extends AppCompatActivity
     // WheelView wv;
     ArrayList<WvBean> list;
 
-    RecyclerView rv;
+    RecyclerView recyclerView;
     DelegateAdapter adapters;
 
     IWidgetTestPresenter widgetTestPresenter;
@@ -57,7 +57,7 @@ public class WidgetActivity extends AppCompatActivity
 
         initPresenter();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_v_layout);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_v_layout);
         final VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -105,7 +105,7 @@ public class WidgetActivity extends AppCompatActivity
 
     @Override
     public void showToast(String toast, int duration) {
-        Toast.makeText(this, toast, duration).show();
+            Toast.makeText(this, toast, duration).show();
     }
 
     @Override

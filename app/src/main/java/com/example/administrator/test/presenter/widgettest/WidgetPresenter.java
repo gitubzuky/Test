@@ -17,10 +17,11 @@ import com.lib.mylib.util.JniUtil;
 public class WidgetPresenter implements IWidgetTestPresenter {
     IWidgetTestView widgetTestView;
 
-
+    JniUtil jni;
 
     public WidgetPresenter(IWidgetTestView widgetTestView) {
         this.widgetTestView = widgetTestView;
+        jni = new JniUtil();
     }
 
     @Override
@@ -29,7 +30,7 @@ public class WidgetPresenter implements IWidgetTestPresenter {
         singleAdapter.setOnItemClickListener(new OnVLayoutItemClickListener() {
             @Override
             public void onVLayoutItemClick(View view, int position) {
-                widgetTestView.showToast("横向item点击："+position, Toast.LENGTH_SHORT);
+                widgetTestView.showToast(jni.stringFromJNI1(position), Toast.LENGTH_SHORT);
             }
         });
         widgetTestView.vLayoutAddAdapter(singleAdapter);
@@ -38,7 +39,14 @@ public class WidgetPresenter implements IWidgetTestPresenter {
             @Override
             public void onVLayoutItemClick(View view, int position) {
 //                widgetTestView.showToast("纵向item点击："+position, Toast.LENGTH_SHORT);
-                widgetTestView.showToast(JniUtil.stringFromJNI1(position), Toast.LENGTH_SHORT);
+                jni.setCppCallListener(new JniUtil.CppCallListener() {
+                    @Override
+                    public void onCppCall(int num) {
+                        widgetTestView.showToast("c++代码调用了一波java代码，参数：" + num, Toast.LENGTH_SHORT);
+                    }
+                });
+//                widgetTestView.showToast(JniUtil.stringFromJNI1(position), Toast.LENGTH_SHORT);
+                jni.stringFromJNI2(position);
             }
         });
         widgetTestView.vLayoutAddAdapter(linearAdapter);

@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <sstream>
+#include <iostream>
 using namespace std;
 extern "C"
 JNIEXPORT jstring JNICALL Java_com_lib_mylib_util_JniUtil_stringFromJNI1(
@@ -11,14 +12,17 @@ JNIEXPORT jstring JNICALL Java_com_lib_mylib_util_JniUtil_stringFromJNI1(
     stringstream ss;
     ss << position;
     num = ss.str();
-    string hello = "from C++ in NDK：" + num;
+    string hello = "java调用了一波c++代码，参数：" + num;
     return env->NewStringUTF(hello.c_str());
 }
 
 extern "C"
-JNIEXPORT jstring JNICALL Java_com_lib_mylib_util_JniUtil_stringFromJNI2(
+JNIEXPORT void JNICALL Java_com_lib_mylib_util_JniUtil_stringFromJNI2(
         JNIEnv *env,
-        jobject /* this */) {
-        string hello = "from C++ in NDK：2";
-        return env->NewStringUTF(hello.c_str());
+        jobject This,
+        jint position) {
+    jclass jniClass = env->FindClass("com/lib/mylib/util/JniUtil");
+//    jmethodID jmethodID1 = env->GetMethodID(jniClass, "callByCpp", "()V");
+    jmethodID jmethodID1 = env->GetMethodID(jniClass, "callByCpp", "(I)V");
+    env->CallVoidMethod(This, jmethodID1, position);
 }

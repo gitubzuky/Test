@@ -38,7 +38,7 @@ public class WidgetPresenter implements IWidgetTestPresenter {
             @Override
             public void onVLayoutItemClick(View view, int position) {
 //                widgetTestView.showToast("纵向item点击："+position, Toast.LENGTH_SHORT);
-                widgetTestView.showToast(JniUtil.stringFromJNI1() + position, Toast.LENGTH_SHORT);
+                widgetTestView.showToast(JniUtil.stringFromJNI1(position), Toast.LENGTH_SHORT);
             }
         });
         widgetTestView.vLayoutAddAdapter(linearAdapter);

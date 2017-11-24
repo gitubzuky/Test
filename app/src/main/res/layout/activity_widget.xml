@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.administrator.test.WidgetActivity">
+    tools:context="com.example.administrator.test.ui.widgettest.WidgetActivity">
 
     <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.example.administrator.test.widget.MyTestSwitch
+                    <com.example.administrator.test.widget.CustomSwitch
                         android:id="@+id/mytestswitch"
                         android:layout_width="100dp"
                         android:layout_height="20dp"

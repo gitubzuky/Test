@@ -1,5 +1,5 @@
 
-package com.example.administrator.test;
+package com.example.administrator.test.ui.widgettest;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.example.administrator.test.R;
 import com.example.administrator.test.model.widgettest.WvBean;
 import com.example.administrator.test.presenter.widgettest.IWidgetTestPresenter;
 import com.example.administrator.test.presenter.widgettest.WidgetPresenter;
+import com.example.administrator.test.ui.other.CalActivity;
 import com.example.administrator.test.view.widgettest.IWidgetTestView;
-import com.example.administrator.test.widget.MyTestSwitch;
+import com.example.administrator.test.widget.CustomSwitch;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,8 @@ import java.util.ArrayList;
  * 控件测试页面
  */
 public class WidgetActivity extends AppCompatActivity
-        implements IWidgetTestView, MyTestSwitch.OnStateChangeListener {
-    MyTestSwitch myTestSwitch;
+        implements IWidgetTestView, CustomSwitch.OnStateChangeListener {
+    CustomSwitch customSwitch;
     // WheelView wv;
     ArrayList<WvBean> list;
 
@@ -37,18 +39,18 @@ public class WidgetActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget);
 
-        myTestSwitch = (MyTestSwitch) findViewById(R.id.mytestswitch);
+        customSwitch = (CustomSwitch) findViewById(R.id.mytestswitch);
         // wv = (WheelView) findViewById(R.id.wv);
 
         /** 默认蓝色，这里修改为红色 */
-        myTestSwitch.setOpenBackgroundColor(Color.parseColor("#f66359"));
-        myTestSwitch.setState(true);
-        myTestSwitch.setOnStateChangeListener(this);
+        customSwitch.setOpenBackgroundColor(Color.parseColor("#f66359"));
+        customSwitch.setState(true);
+        customSwitch.setOnStateChangeListener(this);
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myTestSwitch.changeState(false);
+                customSwitch.changeState(false);
                 startActivity(new Intent(WidgetActivity.this, CalActivity.class));
             }
         });
@@ -95,7 +97,7 @@ public class WidgetActivity extends AppCompatActivity
     }
 
     @Override
-    public void onStateChange(MyTestSwitch sv, boolean isOpen) {
+    public void onStateChange(CustomSwitch sv, boolean isOpen) {
         if (isOpen) {
             Toast.makeText(this, "打开", Toast.LENGTH_SHORT).show();
         } else {
@@ -105,7 +107,7 @@ public class WidgetActivity extends AppCompatActivity
 
     @Override
     public void showToast(String toast, int duration) {
-            Toast.makeText(this, toast, duration).show();
+        Toast.makeText(this, toast, duration).show();
     }
 
     @Override
@@ -124,8 +126,8 @@ public class WidgetActivity extends AppCompatActivity
 
     @Override
     public void changeState(boolean state) {
-        if (myTestSwitch != null){
-            myTestSwitch.changeState(state);
+        if (customSwitch != null){
+            customSwitch.changeState(state);
         }
     }
 }

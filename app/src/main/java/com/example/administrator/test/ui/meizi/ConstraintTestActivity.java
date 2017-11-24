@@ -1,5 +1,5 @@
 
-package com.example.administrator.test;
+package com.example.administrator.test.ui.meizi;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.test.R;
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
 import com.example.administrator.test.presenter.meizi.IMeiziPresenter;

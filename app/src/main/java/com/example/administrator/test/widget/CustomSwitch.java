@@ -27,7 +27,7 @@ import android.view.animation.Interpolator;
  * Created by homer on 16-6-11.<br/>
  * Update by qjj on 17-5-20
  */
-public class MyTestSwitch extends View
+public class CustomSwitch extends View
         implements ValueAnimator.AnimatorUpdateListener, ValueAnimator.AnimatorListener {
     public final static int BACKGROUND_PAINT_STYLE_FILL = 0;
     public final static int BACKGROUND_PAINT_STYLE_STROKE = 1;
@@ -76,17 +76,17 @@ public class MyTestSwitch extends View
     private int mOnSliderColor = 0xffffffff;// 滑块打开颜色
     private int mCurrentSliderColor = mOffSliderColor;
 
-    public MyTestSwitch(Context context) {
+    public CustomSwitch(Context context) {
         super(context);
         init(context);
     }
 
-    public MyTestSwitch(Context context, AttributeSet attrs) {
+    public CustomSwitch(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public MyTestSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -507,6 +507,6 @@ public class MyTestSwitch extends View
          * @param sv 当前控件
          * @param isOpen 状态
          */
-        void onStateChange(MyTestSwitch sv, boolean isOpen);
+        void onStateChange(CustomSwitch sv, boolean isOpen);
     }
 }

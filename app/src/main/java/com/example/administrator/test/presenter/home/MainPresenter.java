@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.administrator.test.ConstraintTestActivity;
+import com.example.administrator.test.ui.meizi.ConstraintTestActivity;
+import com.example.administrator.test.ui.daggertest.Dagger2TestActivity;
 import com.example.administrator.test.R;
-import com.example.administrator.test.TestActivity;
-import com.example.administrator.test.WidgetActivity;
+import com.example.administrator.test.ui.other.TestActivity;
+import com.example.administrator.test.ui.widgettest.WidgetActivity;
 import com.example.administrator.test.model.home.FunctionBean;
 import com.example.administrator.test.view.home.IView;
 
@@ -44,6 +45,7 @@ public class MainPresenter implements IPresenter {
         // }
         addFunction(1, "自用网络框架+图片缩放");
         addFunction(1, "各种控件测试");
+        addFunction(1, "dagger2测试");
         return dataList;
     }
 
@@ -70,6 +72,9 @@ public class MainPresenter implements IPresenter {
                 break;
             case 1:
                 startActivity(WidgetActivity.class);
+                break;
+            case 2:
+                startActivity(Dagger2TestActivity.class);
                 break;
         }
         // switch (viewType) {
@@ -102,6 +107,7 @@ public class MainPresenter implements IPresenter {
     }
 
     private void startActivity(Class clzz) {
+
         Intent i = new Intent((Activity) vMain, clzz);
         ((Activity) vMain).startActivity(i);
     }

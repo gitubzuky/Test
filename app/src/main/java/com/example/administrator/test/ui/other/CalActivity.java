@@ -1,5 +1,5 @@
 
-package com.example.administrator.test;
+package com.example.administrator.test.ui.other;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.administrator.test.R;
 import com.example.administrator.test.adapter.widgettest.MWeekAdapter;
 import com.example.administrator.test.model.widgettest.MDataBean;
 import com.example.administrator.test.widget.NOScrollGridView;

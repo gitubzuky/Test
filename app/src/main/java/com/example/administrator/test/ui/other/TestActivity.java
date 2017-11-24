@@ -1,5 +1,5 @@
 
-package com.example.administrator.test;
+package com.example.administrator.test.ui.other;
 
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.test.R;
 import com.example.administrator.test.annotation.Injection;
 import com.example.administrator.test.annotation.ViewInject;
 import com.example.administrator.test.presenter.meizi.ILoginPresenter;

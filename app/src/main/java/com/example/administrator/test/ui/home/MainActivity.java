@@ -1,5 +1,5 @@
 
-package com.example.administrator.test;
+package com.example.administrator.test.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.test.R;
 import com.example.administrator.test.adapter.home.MainAdapter;
 import com.example.administrator.test.presenter.home.IPresenter;
 import com.example.administrator.test.presenter.home.MainPresenter;

@@ -2,9 +2,12 @@
 package com.example.administrator.test.model.widgettest;
 
 /**
- * Created by Administrator on 2017/7/20.
+ * Created by Zuky on 2017/7/20.
+ * <p>Description: 日历数据bean</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
-
 public class WvBean {
     int tag;// 0--怀孕期; 1--育儿期
     int age;

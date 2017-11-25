@@ -4,7 +4,10 @@ package com.example.administrator.test.view.home;
 import android.support.annotation.ColorRes;
 
 /**
- * Created by Administrator on 2016/9/13.
+ * <p>Description: 首页View接口</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
  */
 public interface IView {
     void setTitle(String text);

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
@@ -81,7 +80,7 @@ public class WidgetSingleAdapter
                 dataList.add(i + "");
             }
 
-            TestRvAdapter testRvAdapter = new TestRvAdapter(act, dataList);
+            SimpleRvAdapter testRvAdapter = new SimpleRvAdapter(act, dataList);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(act);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             rv.setLayoutManager(linearLayoutManager);

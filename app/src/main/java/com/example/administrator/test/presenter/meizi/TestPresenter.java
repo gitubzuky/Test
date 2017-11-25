@@ -7,7 +7,12 @@ import com.example.administrator.test.model.home.FunctionBean;
 import com.example.administrator.test.view.home.IView;
 
 /**
- * Created by Administrator on 2017/2/4.
+ * Created by Zuky on 2017/2/4.
+ * <p>Description: 测试页面逻辑接口presenter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
+ * @deprecated 废弃
  */
 
 public class TestPresenter implements ILoginPresenter {

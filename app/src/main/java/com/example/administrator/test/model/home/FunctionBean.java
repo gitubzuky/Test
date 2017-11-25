@@ -2,7 +2,11 @@
 package com.example.administrator.test.model.home;
 
 /**
- * Created by Administrator on 2016/9/13.
+ * Created by Zuky on 2016/9/13.
+ * <p>Description: 首页面功能bean</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public class FunctionBean {
     int type;// 界面类型

@@ -18,6 +18,7 @@ import android.view.View;
 
 /**
  * 自定义switch Created by Administrator on 2017/4/25.
+ * @deprecated 废弃
  */
 
 public class MyCustomSwitch extends View {

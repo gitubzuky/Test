@@ -5,7 +5,11 @@ import android.app.Activity;
 import java.lang.reflect.Field;
 
 /**
- * Created by Administrator on 2016/10/15.
+ * Created by Zuky on 2016/10/15.
+ * <p>Description: 自定义注解测试</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 
 public class Injection {

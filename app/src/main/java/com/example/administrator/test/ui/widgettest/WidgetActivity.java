@@ -22,7 +22,10 @@ import com.example.administrator.test.widget.CustomSwitch;
 import java.util.ArrayList;
 
 /**
- * 控件测试页面
+ * <p>Description: 控件测试页面</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
  */
 public class WidgetActivity extends AppCompatActivity
         implements IWidgetTestView, CustomSwitch.OnStateChangeListener {

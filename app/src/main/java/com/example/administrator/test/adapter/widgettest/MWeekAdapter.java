@@ -15,7 +15,11 @@ import com.example.administrator.test.model.widgettest.MDataBean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/26.
+ * Created by Zuky on 2017/6/26.
+ * <p>Description: 日历的Adapter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 
 public class MWeekAdapter extends BaseAdapter {

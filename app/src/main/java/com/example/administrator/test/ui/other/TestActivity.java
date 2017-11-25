@@ -18,9 +18,12 @@ import com.example.administrator.test.presenter.meizi.TestPresenter;
 import com.example.administrator.test.view.home.IView;
 
 /**
- * Created by Administrator on 2016/10/14.
+ * <p>Description: 测试页面</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
+ * @deprecated 废弃
  */
-
 public class TestActivity extends AppCompatActivity implements IView {
     @ViewInject(R.id.tv_test_title)
     TextView tvTitle;

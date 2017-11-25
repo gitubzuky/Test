@@ -4,7 +4,11 @@ package com.example.administrator.test.presenter.meizi;
 import android.app.Activity;
 
 /**
- * Created by Administrator on 2017/2/10.
+ * Created by Zuky on 2017/2/10.
+ * <p>Description: 妹子页面逻辑处理presenter接口</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 
 public interface IMeiziPresenter {

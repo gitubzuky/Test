@@ -11,8 +11,11 @@ import com.example.administrator.test.view.widgettest.IWidgetTestView;
 import com.lib.mylib.util.JniUtil;
 
 /**
- * 控件测试页面逻辑
- * Created by zuky on 2017/10/26.
+ * Created by Zuky on 2017/10/26.
+ * <p>Description: 控件测试页面逻辑presenter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public class WidgetPresenter implements IWidgetTestPresenter {
     IWidgetTestView widgetTestView;

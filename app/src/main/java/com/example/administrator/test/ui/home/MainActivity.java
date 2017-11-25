@@ -16,7 +16,12 @@ import com.example.administrator.test.adapter.home.MainAdapter;
 import com.example.administrator.test.presenter.home.IPresenter;
 import com.example.administrator.test.presenter.home.MainPresenter;
 import com.example.administrator.test.view.home.IView;
-
+/**
+ * <p>Description: </p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
+ */
 public class MainActivity extends AppCompatActivity
         implements IView, AdapterView.OnItemClickListener {
     private TextView tvTitle;

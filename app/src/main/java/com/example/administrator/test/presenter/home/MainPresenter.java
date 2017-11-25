@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 主界面presenter Created by Administrator on 2016/9/13.
+ * Created by Zuky on 2016/9/13.
+ * <p>Description: 主界面presenter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public class MainPresenter implements IPresenter {
     private List<FunctionBean> dataList;

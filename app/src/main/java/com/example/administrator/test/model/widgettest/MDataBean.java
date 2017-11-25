@@ -2,7 +2,11 @@
 package com.example.administrator.test.model.widgettest;
 
 /**
- * Created by Administrator on 2017/6/26.
+ * Created by Zuky on 2017/6/26.
+ * <p>Description: </p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 
 public class MDataBean {

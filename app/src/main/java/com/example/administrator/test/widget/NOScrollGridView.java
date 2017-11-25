@@ -6,8 +6,11 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * 可以嵌套在ScrollView里面的GridView，listview同理 Created by LinPH on
- * 2015-6-17下午12:01:22.
+ * Created by LinPH on 2015-6-17下午12:01:22.
+ * <p>Description: 可以嵌套在ScrollView里面的GridView</p>
+ * <p>Tips: ListView同理</p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public class NOScrollGridView extends GridView {
 

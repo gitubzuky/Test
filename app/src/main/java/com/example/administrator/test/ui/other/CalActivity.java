@@ -20,7 +20,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * <p>Description: 日历测试页面</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
+ */
 public class CalActivity extends AppCompatActivity {
     NOScrollGridView weekView;
     EditText etLastMDate, etMPeriod, etMDays;

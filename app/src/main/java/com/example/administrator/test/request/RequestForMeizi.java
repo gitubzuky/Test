@@ -9,7 +9,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * 妹子Retrofit的请求接口 Created by Administrator on 2017/2/10.
+ * <p>Description: 妹子Retrofit的请求接口 </p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public interface RequestForMeizi extends HttpRequestService {
     @GET("{type}/{limit}/{page}")

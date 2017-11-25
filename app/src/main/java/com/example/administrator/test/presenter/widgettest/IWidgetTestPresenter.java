@@ -4,8 +4,11 @@ package com.example.administrator.test.presenter.widgettest;
 import android.app.Activity;
 
 /**
- * 控件测试页面逻辑
- * Created by zuky on 2017/10/25.
+ * Created by Zuky on 2017/10/25.
+ * <p>Description: 控件测试页面逻辑presenter接口</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public interface IWidgetTestPresenter {
 

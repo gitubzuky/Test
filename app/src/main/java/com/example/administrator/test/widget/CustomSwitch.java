@@ -19,13 +19,16 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 /**
- * 自定义的switch<br/>
- * 备注：<br/>
+ * Created by homer on 16-6-11.
+ * <p>Description: 自定义的switch<br/></p>
+ * <p>Tips: </p>
  * 1.暂时不支持xml属性配置<br/>
  * 2.padding属性暂时不支持<br/>
  * 3.最好给定宽高<br/>
- * Created by homer on 16-6-11.<br/>
- * Update by qjj on 17-5-20
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
+ * 原版详见
+ * @see FunSwitch
  */
 public class CustomSwitch extends View
         implements ValueAnimator.AnimatorUpdateListener, ValueAnimator.AnimatorListener {

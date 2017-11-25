@@ -4,9 +4,12 @@ package com.example.administrator.test.model.meizi;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/2/11.
+ * Created by Zuky on 2017/2/11.
+ * <p>Description: 妹子页面妹子数据bean</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
-
 public class MeiziTestBean {
 
     /**

@@ -26,7 +26,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 /**
- * meizi 页面
+ * <p>Description: meizi页面</p>
+ * <p>Tips: 使用自用网络框架和图片放大控件</p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/24.</p>
  */
 public class ConstraintTestActivity extends AppCompatActivity
         implements IMeiziView, View.OnClickListener {

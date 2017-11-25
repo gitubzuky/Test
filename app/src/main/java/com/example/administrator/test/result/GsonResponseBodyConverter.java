@@ -13,6 +13,10 @@ import retrofit2.Converter;
 
 /**
  * Created by Charles on 2016/3/17.
+ * <p>Description: </p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;

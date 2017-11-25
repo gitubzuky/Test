@@ -13,15 +13,18 @@ import com.example.administrator.test.adapter.BaseRvAdapter;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/10/14.
+ * Created by Zuky on 2016/10/14.
+ * <p>Description: 简单单文本列表Adapter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
-
-public class TestRvAdapter extends BaseRvAdapter<TestRvAdapter.ViewHolder> {
+public class SimpleRvAdapter extends BaseRvAdapter<SimpleRvAdapter.ViewHolder> {
     View itemView;
     Context context;
     List<String> datalist;
 
-    public TestRvAdapter(Context context, List<String> datalist) {
+    public SimpleRvAdapter(Context context, List<String> datalist) {
         this.context = context;
         this.datalist = datalist;
     }

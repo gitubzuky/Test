@@ -17,7 +17,11 @@ import com.example.administrator.test.adapter.OnVLayoutItemClickListener;
 import com.example.administrator.test.adapter.OnVLayoutItemLongClickListener;
 
 /**
- * Created by Administrator on 2017/10/23.
+ * Created by Zuky on 2017/10/23.
+ * <p>Description: 控件测试页面逻辑</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 
 public class WidgetLinearAdapter

@@ -30,9 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 妹子图片相关逻辑处理 Created by Administrator on 2017/2/10.
+ * Created by Zuky on 2017/2/10.
+ * <p>Description: 妹子图片相关逻辑处理presenter</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
-
 public class MeiziPresenter implements IMeiziPresenter {
     private static final String TAG = "MeiziPresenter";
     // private MeiziResult result = new MeiziResult();

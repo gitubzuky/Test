@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Administrator on 2016/10/14.
+ * Created by Zuky on 2016/10/14.
+ * <p>Description: Base的RecyclerView Adapter抽象类</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public abstract class BaseRvAdapter<BH extends BaseRvAdapter.ViewHolder>
         extends RecyclerView.Adapter<BH> implements View.OnClickListener, View.OnLongClickListener {

@@ -5,8 +5,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 /**
- * 辣鸡版 RvAdapter
- * @param <VH>
+ * <p>Description: Base的ListView Adapter抽象类</p>
+ * <p>Tips: </p>
+ * <p>Version: 1.0</p>
+ * <p>Update by Zuky on 2017/11/25.</p>
  */
 public abstract class BaseHolderAdapter<VH extends BaseHolderAdapter<VH>.ViewHolder> extends BaseAdapter {
 	@Override
@@ -81,7 +83,7 @@ public abstract class BaseHolderAdapter<VH extends BaseHolderAdapter<VH>.ViewHol
 	
 	/**
 	 * 基础ViewHolder
-	 * @author zuky
+	 * @author Zuky
 	 *
 	 */
 	public abstract class ViewHolder{

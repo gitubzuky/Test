@@ -84,7 +84,7 @@ public class WidgetLinearAdapter
         public LinearViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_avatar);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvTitle = (TextView) itemView.findViewById(R.id.act_main_tv_title);
             tvContent = (TextView) itemView.findViewById(R.id.tv_content);
 
             itemView.setOnClickListener(this);

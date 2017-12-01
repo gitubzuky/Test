@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_click">
     <TextView
         android:id="@+id/tv_test"
         android:layout_width="wrap_content"
@@ -9,4 +10,9 @@
         android:layout_margin="10dp"
         android:text="哈哈哈"
         android:textColor="#000000"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_black_333333"
+        android:layout_below="@+id/tv_test"/>
 </RelativeLayout>

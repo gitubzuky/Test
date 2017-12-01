@@ -11,18 +11,27 @@ import android.widget.TextView;
 
 import com.example.administrator.test.R;
 import com.example.administrator.test.adapter.BaseHolderAdapter;
+import com.example.administrator.test.adapter.BaseRvAdapter;
 import com.example.administrator.test.model.home.FunctionBean;
 
 import java.util.List;
 
 /**
  * Created by Zuky on 2016/9/13.
- * <p>Description: 首页功能列表Adapter</p>
- * <p>Tips: </p>
- * <p>Version: 1.0</p>
- * <p>Update by Zuky on 2017/11/25.</p>
+ * <p>
+ * Description: 首页功能列表RvAdapter
+ * </p>
+ * <p>
+ * Tips:
+ * </p>
+ * <p>
+ * Version: 1.0
+ * </p>
+ * <p>
+ * Update by Zuky on 2017/11/25.
+ * </p>
  */
-public class MainAdapter extends BaseHolderAdapter {
+public class MainAdapter extends BaseRvAdapter {
     private View view;
     private List<FunctionBean> dataList;
     private Context context;
@@ -38,12 +47,7 @@ public class MainAdapter extends BaseHolderAdapter {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected ViewHolder doOnCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder = null;
         switch (viewType) {
             case 0:
@@ -63,7 +67,7 @@ public class MainAdapter extends BaseHolderAdapter {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    protected void doOnBindViewHolder(ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case 0:
                 if (!TextUtils.isEmpty(dataList.get(position).getText())) {
@@ -82,10 +86,10 @@ public class MainAdapter extends BaseHolderAdapter {
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return dataList != null ? dataList.size() : 0;
     }
 
-    public class Type1ViewHolder extends BaseHolderAdapter.ViewHolder {
+    public class Type1ViewHolder extends BaseRvAdapter.ViewHolder {
         private TextView tvText;
         private ImageView ivItem;
 
@@ -96,7 +100,7 @@ public class MainAdapter extends BaseHolderAdapter {
         }
     }
 
-    public class Type2ViewHolder extends BaseHolderAdapter.ViewHolder {
+    public class Type2ViewHolder extends BaseRvAdapter.ViewHolder {
         private TextView tvText;
 
         public Type2ViewHolder(View itemView) {

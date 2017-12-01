@@ -24,18 +24,23 @@
         <activity
             android:name=".ui.other.TestActivity"
             android:theme="@style/AppTheme" />
+        <!--妹子页面-->
         <activity
             android:name=".ui.meizi.ConstraintTestActivity"
             android:launchMode="singleTask" />
+        <!--控件测试页面-->
         <activity
             android:name=".ui.widgettest.WidgetActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <!--dagger2测试页面-->
         <activity android:name=".ui.daggertest.Dagger2TestActivity" />
+        <!--图片放大相关-->
         <activity
             android:name=".widget.picturecheck.BigPictureActivity"
             android:theme="@style/Transparent" />
         <activity android:name=".temp.bigpicture.BigActivity" />
         <activity android:name=".temp.bigpicture.ImagePagerActivity" />
+        <!--日历页面-->
         <activity android:name=".ui.other.CalActivity"></activity>
     </application>
 

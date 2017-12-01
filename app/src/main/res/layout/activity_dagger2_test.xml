@@ -6,12 +6,93 @@
     tools:context="com.example.administrator.test.ui.daggertest.Dagger2TestActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/coffee_shop"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/act_dagger2_test_tv_sample1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/coffee_shop"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:background="@drawable/bg_white_click"
+            />
+
+        <TextView
+            android:id="@+id/act_dagger2_test_tv_current_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前咖啡机状态：关闭"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:background="@drawable/bg_white_click"
+            />
+
+        <TextView
+            android:id="@+id/act_dagger2_test_tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="源文本：&lt;我是&gt;&lt;img http&gt;&lt;我是&gt;&lt;img ceshdifa&gt;&lt;我是&gt;&lt;img sdfkasfakl&gt;&lt;我是&gt;&lt;img asdlfaks&gt;"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            />
+
+        <EditText
+            android:id="@+id/act_dagger2_test_et_regex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:hint="正则表达式"/>
+
+        <EditText
+            android:id="@+id/act_dagger2_test_et_replace_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:hint="替换文本"/>
+
+        <Button
+            android:id="@+id/act_dagger2_test_btn_replace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"
+            android:text="替换"
+            />
+
+        <TextView
+            android:id="@+id/act_dagger2_test_tv_replace_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="替换后的文本："
+            android:gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

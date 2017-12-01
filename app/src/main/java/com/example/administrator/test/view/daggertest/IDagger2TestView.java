@@ -9,5 +9,5 @@ import com.example.administrator.test.view.IBaseView;
  * <p>Created by Zuky on 2017/11/24.</p>
  */
 public interface IDagger2TestView extends IBaseView{
-
+    void changeCoffeeMakerStatus(String status);
 }

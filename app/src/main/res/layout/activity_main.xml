@@ -10,16 +10,16 @@
     tools:context="com.example.administrator.test.ui.home.MainActivity">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/act_main_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Hello World!"
         android:textSize="16sp"/>
 
-    <ListView
-        android:id="@+id/lv_main"
-        android:layout_below="@+id/tv_title"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/act_main_rv_function"
+        android:layout_below="@+id/act_main_tv_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"

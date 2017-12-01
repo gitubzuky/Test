@@ -4,28 +4,44 @@ package com.example.administrator.test.ui.home;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.test.R;
+import com.example.administrator.test.adapter.BaseRvAdapter;
 import com.example.administrator.test.adapter.home.MainAdapter;
 import com.example.administrator.test.presenter.home.IPresenter;
 import com.example.administrator.test.presenter.home.MainPresenter;
 import com.example.administrator.test.view.home.IView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
- * <p>Description: </p>
- * <p>Tips: </p>
- * <p>Version: 1.0</p>
- * <p>Update by Zuky on 2017/11/24.</p>
+ * <p>
+ * Description: 首页
+ * </p>
+ * <p>
+ * Tips:
+ * </p>
+ * <p>
+ * Version: 1.0
+ * </p>
+ * <p>
+ * Update by Zuky on 2017/11/24.
+ * </p>
  */
 public class MainActivity extends AppCompatActivity
-        implements IView, AdapterView.OnItemClickListener {
-    private TextView tvTitle;
-    private ListView lvMain;
+        implements IView, BaseRvAdapter.OnRvItemClickListener {
+    @BindView(R.id.act_main_tv_title)
+    TextView tvTitle;
+    @BindView(R.id.act_main_rv_function)
+    RecyclerView rvFunction;
     private IPresenter presenter;
     private MainAdapter mAdapter;
 
@@ -33,16 +49,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initPresenter();
         initView();
     }
 
     private void initView() {
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        lvMain = (ListView) findViewById(R.id.lv_main);
+        // lvMain = (ListView) findViewById(R.id.lv_main);
+        // mAdapter = new MainAdapter(this, presenter.getData());
+        // lvMain.setAdapter(mAdapter);
+        // lvMain.setOnItemClickListener(this);
         mAdapter = new MainAdapter(this, presenter.getData());
-        lvMain.setAdapter(mAdapter);
-        lvMain.setOnItemClickListener(this);
+        rvFunction.setLayoutManager(new LinearLayoutManager(this));
+        rvFunction.setAdapter(mAdapter);
+        mAdapter.setRvItemClickListener(this);
     }
 
     private void initPresenter() {
@@ -81,7 +101,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        presenter.doItemClick(view, position, l, mAdapter.getItemViewType(position));
+    public void OnRvItemClick(View view, int position) {
+        presenter.doItemClick(view, position);
     }
 }

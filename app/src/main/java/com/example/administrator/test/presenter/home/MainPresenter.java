@@ -67,7 +67,7 @@ public class MainPresenter implements IPresenter {
     }
 
     @Override
-    public void doItemClick(final View view, int position, long l, int viewType) {
+    public void doItemClick(final View view, int position) {
         switch (position) {
             case 0:
                 vMain.setTitleTextColor(R.color.colorPrimary);

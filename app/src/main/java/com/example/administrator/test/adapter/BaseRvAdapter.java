@@ -20,6 +20,9 @@ public abstract class BaseRvAdapter<BH extends BaseRvAdapter.ViewHolder>
 
     @Override
     public BH onCreateViewHolder(ViewGroup parent, int viewType) {
+        /*
+         * 主要防止在继承BaseAapter时忘记重载onCreateViewHolder(),干脆就加多一个抽象方法来处理业务逻辑
+         */
         BH holder = doOnCreateViewHolder(parent, viewType);
         holder.rootView.setOnClickListener(this);
         holder.rootView.setOnLongClickListener(this);

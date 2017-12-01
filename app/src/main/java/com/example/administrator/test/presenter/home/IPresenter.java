@@ -22,8 +22,6 @@ public interface IPresenter {
      * 
      * @param view
      * @param position
-     * @param l
-     * @param viewType
      */
-    void doItemClick(View view, int position, long l, int viewType);
+    void doItemClick(View view, int position);
 }

@@ -11,5 +11,7 @@ import dagger.Component;
  * <p>Created by Zuky on 2017/11/24.</p>
  */
 @Singleton
-public interface Dagger2TestComponent {
+@Component(modules = {DripCoffeeModule.class})
+public interface CoffeeShop {
+    CoffeeMaker maker();
 }

@@ -55,7 +55,7 @@ public class ListItemAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_list, null);
             holder.iv_avatar = (ImageView) convertView.findViewById(R.id.iv_avatar);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tv_title = (TextView) convertView.findViewById(R.id.act_main_tv_title);
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             holder.gridview = (NoScrollGridView) convertView.findViewById(R.id.gridview);
             convertView.setTag(holder);

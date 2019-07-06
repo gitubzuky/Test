@@ -16,13 +16,9 @@ import com.example.administrator.test.presenter.dagger2test.IDagger2TestPresente
 import com.example.administrator.test.presenter.dagger2test.RegexPresenter;
 import com.example.administrator.test.view.daggertest.IDagger2TestView;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.observers.DisposableObserver;
-import kotlin.text.Regex;
 
 /**
  * <p>
@@ -120,7 +116,7 @@ public class Dagger2TestActivity extends AppCompatActivity
 
                     @Override
                     public void onNext(String s) {
-                        Log.e("rxjava-coffee", (System.currentTimeMillis() - preTime)+"s");
+                        Log.e("rxjava-coffee", (System.currentTimeMillis() - preTime) + "s");
                         presenter.doOnBrew(s);
                         preTime = System.currentTimeMillis();
                     }

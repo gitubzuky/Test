@@ -18,14 +18,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.administrator.test.R;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
-import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
 /**
  * 单张图片显示Fragment
@@ -171,7 +170,8 @@ public class ImageDetailFragment extends Fragment {
                     //
                     // 解决:
                     // 所以只要在缩小动画开始之前将photoview所绑定的imageview清除掉就行了
-                    mAttacher.cleanup();
+                    // mAttacher.cleanup();
+                    mAttacher.update();
                 }
             }
 
@@ -202,8 +202,19 @@ public class ImageDetailFragment extends Fragment {
 
         mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
 
+            /**
+             * A callback to receive where the user taps on a photo. You will only receive a
+             * callback if the user taps on the actual photo, tapping on 'whitespace' will
+             * be ignored.
+             *
+             * @param view ImageView the user tapped.
+             * @param x where the user tapped from the of the Drawable, as percentage of the
+             *            Drawable width.
+             * @param y where the user tapped from the top of the Drawable, as percentage of
+             *            the
+             */
             @Override
-            public void onPhotoTap(View arg0, float arg1, float arg2) {
+            public void onPhotoTap(ImageView view, float x, float y) {
                 Log.e(TAG, TAG + ": -> onPhotoTap");
                 if (isTransforming) {
                     return;
@@ -212,14 +223,14 @@ public class ImageDetailFragment extends Fragment {
                 imageView.transformOut();
             }
 
-            @Override
-            public void onOutsidePhotoTap() {
-                Log.e(TAG, TAG + ": -> onOutsidePhotoTap");
-                if (System.currentTimeMillis()
-                        - previousclickTime < 500) {
-                    return;
-                }
-            }
+            // @Override
+            // public void onOutsidePhotoTap() {
+            // Log.e(TAG, TAG + ": -> onOutsidePhotoTap");
+            // if (System.currentTimeMillis()
+            // - previousclickTime < 500) {
+            // return;
+            // }
+            // }
         });
     }
 

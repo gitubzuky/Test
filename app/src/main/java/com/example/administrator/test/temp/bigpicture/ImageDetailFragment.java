@@ -12,12 +12,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.test.R;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
-import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
+//import uk.co.senab.photoview.PhotoViewAttacher;
+//import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 
 /**
  * 单张图片显示Fragment
@@ -53,14 +55,20 @@ public class ImageDetailFragment extends Fragment {
 
         mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
 
+            /**
+             * A callback to receive where the user taps on a photo. You will only receive a
+             * callback if the user taps on the actual photo, tapping on 'whitespace' will
+             * be ignored.
+             *
+             * @param view ImageView the user tapped.
+             * @param x where the user tapped from the of the Drawable, as percentage of the
+             *            Drawable width.
+             * @param y where the user tapped from the top of the Drawable, as percentage of
+             *            the
+             */
             @Override
-            public void onPhotoTap(View arg0, float arg1, float arg2) {
+            public void onPhotoTap(ImageView view, float x, float y) {
                 getActivity().finish();
-            }
-
-            @Override
-            public void onOutsidePhotoTap() {
-
             }
         });
 
